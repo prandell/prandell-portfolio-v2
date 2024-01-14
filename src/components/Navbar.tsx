@@ -112,6 +112,7 @@ const Navbar: React.FC = () => {
           )}
 
           <div
+            style={{ backgroundColor: colours.primary }}
             className={`${
               !toggle ? 'hidden' : 'flex'
             } p-6 absolute top-[55px] right-0 mx-4 my-2 min-w-[140px] z-10 rounded-l`}
