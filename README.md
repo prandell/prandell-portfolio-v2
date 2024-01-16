@@ -7,10 +7,10 @@
 <div align="center">
   <img src="public/prandell.JPG" alt="Logo" width="150" height="100">
 
-<h3 align="center">React & ThreeJs</h3>
+<h3 align="center">Patrick Randell Portfolio</h3>
 
   <p align="center">
-    New and improved portfolio website
+    New and improved portfolio website, created using React, ThreeJS and Typescript
   </p>
 </div>
 
@@ -47,7 +47,9 @@
 
 ## About The Project
 
-This repository contains all the code used to create this portfolio
+This repository contains all the code for my personal portfolio. The portfolio borrows ideas from many different tutorials and articles across the web.
+
+Big credit to [bruno imbrizi](http://brunoimbrizi.com) for his ThreeJS interactive particles, and [Javascript Mastery](https://www.youtube.com/watch?v=0fYi8SGA20k&t=9568s) for their portfolio website youtube video.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -65,9 +67,7 @@ This repository contains all the code used to create this portfolio
 
 ### Prerequisites
 
-You will require several of the following binaries and packages to run the scripts contained within the repository.
-
-First, you will need NodeJs installed on your machine.
+You will need NodeJs installed on your machine to start.
 
 ### Installation
 
@@ -94,7 +94,7 @@ The following instructions are the steps necessary to execute the application.
 4. Install the `Javascript` packages.
 
    ```sh
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -110,7 +110,7 @@ cd /path/to/repository
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://127.0.0.1:5173](http://127.0.0.1:5173) with your browser to see the result.
 
 ## Learn More
 
