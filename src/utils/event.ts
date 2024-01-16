@@ -6,17 +6,18 @@ const isSupported = () => {
   alreadyTested = true
 
   // Test via a getter in the options object to see if the passive property is accessed
+  const opts = Object.defineProperty({}, 'passive', {
+    get: () => {
+      passiveSupported = true
+    }
+  })
+  const wndw = window as any
   try {
-    let opts = Object.defineProperty({}, 'passive', {
-      get: () => {
-        passiveSupported = true
-      }
-    })
-    window.addEventListener('test', null, opts)
+    wndw.addEventListener('test', null, opts) as any
   } catch (e) {
     return passiveSupported
   }
-  window.removeEventListener('test', null, opts)
+  wndw.removeEventListener('test', null, opts) as any
   return passiveSupported
 }
 
