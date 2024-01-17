@@ -65,6 +65,13 @@ const services = [
   }
 ]
 
+export const aboutMe = {
+  blurb: `I am a senior full-stack developer recently working with LLM's and generative AI.
+  I am currently on a 6-month working holiday in Whistler, back in Melbourne in April.
+  I am a fast learner and love new challenges. When I can't snowboard, I'm typically cooking or gaming.
+  Here you track the game I'm currently playing, fetched via the steam API`
+}
+
 const technologies = [
   {
     name: 'HTML 5',

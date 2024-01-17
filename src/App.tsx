@@ -17,7 +17,7 @@ import {
 const App: React.FC = () => {
   return (
     <RecoilRoot>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <div className="relative z-0 bg-primary">
           <div className="bg-primary bg-cover bg-no-repeat bg-center">
             <Navbar />

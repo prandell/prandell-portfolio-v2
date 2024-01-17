@@ -1,7 +1,33 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 
-const About: React.FC = () => {
-  return <div>About</div>
+import { styles } from '../styles'
+import { aboutMe, services } from '../constants'
+import { TransitionDirection, fadeIn, textVariant } from '../utils/motion'
+import SectionWrapper from './SectionWrapper/SectionWrapper'
+import SteamTracker from './SteamTracker/SteamTracker'
+
+const About = () => {
+  return (
+    <>
+      <motion.div variants={textVariant()}>
+        <p className={styles.sectionSubText}>Introduction</p>
+        <h2 className={styles.sectionHeadText}>Overview</h2>
+      </motion.div>
+
+      <div className="mt-4 flex flex-col sm:flex-row items-center gap-10">
+        <motion.div
+          variants={fadeIn(TransitionDirection.LEFT, '', 0.1, 1)}
+          className="flex text-secondary text-[17px] max-w-l leading-[30px]"
+        >
+          {aboutMe.blurb}
+        </motion.div>
+        <motion.div variants={fadeIn(TransitionDirection.RIGHT, '', 0.1, 1)}>
+          <SteamTracker />
+        </motion.div>
+      </div>
+    </>
+  )
 }
 
-export default About
+export default SectionWrapper(About, 'about')

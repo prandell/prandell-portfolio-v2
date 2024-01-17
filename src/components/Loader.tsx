@@ -1,3 +1,4 @@
+import React from 'react'
 import { Html, useProgress } from '@react-three/drei'
 
 const CanvasLoader = () => {
@@ -10,15 +11,16 @@ const CanvasLoader = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: '140px'
       }}
     >
       <span className="canvas-loader"></span>
       <p
+        className="text-secondary"
         style={{
           fontSize: 14,
-          color: '#F1F1F1',
-          fontWeight: 800,
+          // color: '#F1F1F1',
           marginTop: 40
         }}
       >

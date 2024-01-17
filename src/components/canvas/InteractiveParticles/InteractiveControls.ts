@@ -141,16 +141,19 @@ export default class InteractiveControls extends EventEmitter {
       )
 
       if (this.hovered !== object) {
+        document.body.style.cursor = 'default'
         this.emit('interactive-out', { object: this.hovered })
         this.emit('interactive-over', { object })
         this.hovered = object
       } else {
+        document.body.style.cursor = 'pointer'
         this.emit('interactive-move', {
           object,
           intersectionData: this.intersectionData
         })
       }
     } else {
+      document.body.style.cursor = 'default'
       this.intersectionData = null
 
       if (this.hovered !== null) {
@@ -185,8 +188,8 @@ export default class InteractiveControls extends EventEmitter {
   }
 
   onLeave(e) {
+    document.body.style.cursor = 'default'
     this.onUp(e)
-
     this.emit('interactive-out', { object: this.hovered })
     this.hovered = null
   }

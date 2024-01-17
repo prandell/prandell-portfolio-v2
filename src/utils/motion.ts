@@ -1,4 +1,4 @@
-export const textVariant = (delay: number) => {
+export const textVariant = (delay?: number) => {
   return {
     hidden: {
       y: -50,
@@ -16,11 +16,12 @@ export const textVariant = (delay: number) => {
   }
 }
 
-enum TransitionDirection {
+export enum TransitionDirection {
   LEFT = 'left',
   RIGHT = 'right',
   UP = 'up',
-  DOWN = 'down'
+  DOWN = 'down',
+  NONE = ''
 }
 
 export const fadeIn = (
@@ -92,7 +93,10 @@ export const slideIn = (
   }
 }
 
-export const staggerContainer = (staggerChildren: any, delayChildren: any) => {
+export const staggerContainer = (
+  staggerChildren?: any,
+  delayChildren?: any
+) => {
   return {
     hidden: {},
     show: {
