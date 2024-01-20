@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    if (!document.querySelector('canvas')) {
+    if (!document.querySelector('.hero-container > canvas')) {
       const hi = new InteractiveParticles()
       hi.init()
     }
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
           <div className="w-[28px] h-[40px] rounded-2xl border-[1px] border-secondary flex justify-center items-start p-2">
             <motion.div
               animate={{
-                y: [0, 14],
+                y: [14, 0],
                 opacity: [1, 1, 0]
               }}
               transition={{

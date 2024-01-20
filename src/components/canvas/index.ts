@@ -1,13 +1,13 @@
 import EarthCanvas from './Earth'
-import BallCanvas from './Ball'
 import OctaneCanvas from './Octane'
 import StarsCanvas from './Stars'
+import CanvasLoader from './CanvasLoader'
 import InteractiveParticles from './InteractiveParticles/InteractiveParticles'
 
 export {
   EarthCanvas,
-  BallCanvas,
   OctaneCanvas,
   StarsCanvas,
-  InteractiveParticles
+  InteractiveParticles,
+  CanvasLoader
 }

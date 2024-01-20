@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 import { styles } from '../styles'
-import { aboutMe, services } from '../constants'
+import { aboutMe } from '../constants'
 import { TransitionDirection, fadeIn, textVariant } from '../utils/motion'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 import SteamTracker from './SteamTracker/SteamTracker'
@@ -18,9 +18,15 @@ const About = () => {
       <div className="mt-4 flex flex-col sm:flex-row items-center gap-10">
         <motion.div
           variants={fadeIn(TransitionDirection.LEFT, '', 0.1, 1)}
-          className="flex text-secondary text-[17px] max-w-l leading-[30px]"
+          className="flex flex-col text-secondary text-[17px] max-w-l leading-[30px]"
         >
           {aboutMe.blurb}
+          <a
+            className="text-[8px] w-fit"
+            href="https://rocketleague.tracker.network/rocket-league/profile/steam/76561199068492201/overview"
+          >
+            Also, check my Rocket League stats
+          </a>
         </motion.div>
         <motion.div variants={fadeIn(TransitionDirection.RIGHT, '', 0.1, 1)}>
           <SteamTracker />

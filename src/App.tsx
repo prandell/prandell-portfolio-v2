@@ -1,12 +1,12 @@
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import { BrowserRouter } from 'react-router-dom'
+import 'react-vertical-timeline-component/style.min.css'
 
 import {
   About,
   Experience,
   Contact,
-  Feedbacks,
   Hero,
   Tech,
   Navbar,
@@ -27,7 +27,6 @@ const App: React.FC = () => {
           <Experience />
           <Tech />
           <Works />
-          <Feedbacks />
           <div className="relative z-0">
             <Contact />
             <StarsCanvas />

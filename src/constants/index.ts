@@ -1,29 +1,5 @@
-import {
-  mobile,
-  backend,
-  creator,
-  web,
-  javascript,
-  typescript,
-  html,
-  css,
-  reactjs,
-  redux,
-  tailwind,
-  nodejs,
-  mongodb,
-  git,
-  figma,
-  docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
-  carrent,
-  jobit,
-  tripguide,
-  threejs
-} from '../assets'
+import { rcomics, map } from '../assets'
+import { IconDictionary } from '../components/Icons'
 
 export const colours = {
   primary: '#050816',
@@ -46,233 +22,122 @@ export const navLinks = [
   }
 ]
 
-const services = [
-  {
-    title: 'Web Developer',
-    icon: web
-  },
-  {
-    title: 'React Native Developer',
-    icon: mobile
-  },
-  {
-    title: 'Backend Developer',
-    icon: backend
-  },
-  {
-    title: 'Content Creator',
-    icon: creator
-  }
-]
-
 export const aboutMe = {
   blurb: `I am a senior full-stack developer recently working with LLM's and generative AI.
   I am currently on a 6-month working holiday in Whistler, back in Melbourne in April.
   I am a fast learner and love new challenges. When I can't snowboard, I'm typically cooking or gaming.
-  Here you track the game I'm currently playing, fetched via the steam API`
+  Here you track the game I'm currently playing, fetched via the steam API.`
 }
 
-const technologies = [
-  {
-    name: 'HTML 5',
-    icon: html
-  },
-  {
-    name: 'CSS 3',
-    icon: css
-  },
-  {
-    name: 'JavaScript',
-    icon: javascript
-  },
-  {
-    name: 'TypeScript',
-    icon: typescript
-  },
-  {
-    name: 'React JS',
-    icon: reactjs
-  },
-  {
-    name: 'Redux Toolkit',
-    icon: redux
-  },
-  {
-    name: 'Tailwind CSS',
-    icon: tailwind
-  },
-  {
-    name: 'Node JS',
-    icon: nodejs
-  },
-  {
-    name: 'MongoDB',
-    icon: mongodb
-  },
-  {
-    name: 'Three JS',
-    icon: threejs
-  },
-  {
-    name: 'git',
-    icon: git
-  },
-  {
-    name: 'figma',
-    icon: figma
-  },
-  {
-    name: 'docker',
-    icon: docker
-  }
-]
+export interface Experience {
+  title: string
+  company_name: string
+  icon: string
+  iconBg: string
+  date: string
+  points: string[]
+}
 
-const experiences = [
+const experiences: Experience[] = [
   {
-    title: 'React.js Developer',
-    company_name: 'Starbucks',
-    icon: starbucks,
-    iconBg: '#383E56',
-    date: 'March 2020 - April 2021',
+    title: 'Project lead - Senior Consultant',
+    company_name: 'Deloitte Australia - Illuminate',
+    icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp',
+    iconBg: 'black',
+    date: 'June 2023 - Present',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.'
+      'Created streamlined data pipelines to aid downstream ingestion (Data engineering)',
+      `Created a multi-faceted chatbot using LLM's and vector databases to extract structured information from user queries and answer questions over source documents.`,
+      'Contributed to popular open-source generative AI software libraries',
+      'Regularly demonstrated new features to large audiences (30+)',
+      'Managed and mentored team mates, contributing to their learning and developement'
     ]
   },
   {
-    title: 'React Native Developer',
-    company_name: 'Tesla',
-    icon: tesla,
-    iconBg: '#E6DEDD',
-    date: 'Jan 2021 - Feb 2022',
+    title: 'Project lead - Consultant',
+    company_name: 'Deloitte Australia - Illuminate',
+    icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp',
+    iconBg: 'black',
+    date: 'July 2022 - June 2023',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.'
+      `Lead a small team to deliver a modern web application that enhances the capability and usability of the application for it's users`,
+      'Collaborating with cross-functional teams including designers, product managers, and stakeholders to deliver a quality finaln product',
+      'Managed and assigned tasks, reviewed work, and organized delivery plans',
+      'Exhibited complete autonomy and initiative in delivering high-quality software features and troubleshooting issues'
     ]
   },
   {
-    title: 'Web Developer',
-    company_name: 'Shopify',
-    icon: shopify,
-    iconBg: '#383E56',
-    date: 'Jan 2022 - Jan 2023',
+    title: 'Full-stack Developer - Graduate',
+    company_name: 'Deloitte Australia - Illuminate',
+    icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp',
+    iconBg: 'black',
+    date: 'April 2021 - July 2022',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.'
+      'Worked in a team behind an application that uses machine learning and data visualizations to help clients understand and optimize their supply network operations and respond to risks',
+      'Deloitte Illuminate saved $16M in costs for their clients in 2021',
+      'Contributed to the development of several major features, from front-end to back-end',
+      'Designed and implemented graph traversal algorithms in PostgresSQL'
     ]
   },
   {
-    title: 'Full stack Developer',
-    company_name: 'Meta',
-    icon: meta,
-    iconBg: '#E6DEDD',
-    date: 'Jan 2023 - Present',
+    title: 'Summer Vacationer',
+    company_name: 'ANZ',
+    icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/anz-logo.png',
+    iconBg: 'black',
+    date: 'Nov 2019 - Feb 2020',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.'
+      'Working on a Python controller used to migrate applications across on-premises locations.',
+      'Working on a controller used to migrate applications across on-premises location'
     ]
   }
 ]
 
-const testimonials = [
-  {
-    testimonial:
-      'I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.',
-    name: 'Sara Lee',
-    designation: 'CFO',
-    company: 'Acme Co',
-    image: 'https://randomuser.me/api/portraits/women/4.jpg'
-  },
-  {
-    testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: 'Chris Brown',
-    designation: 'COO',
-    company: 'DEF Corp',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg'
-  },
-  {
-    testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: 'Lisa Wang',
-    designation: 'CTO',
-    company: '456 Enterprises',
-    image: 'https://randomuser.me/api/portraits/women/6.jpg'
-  }
-]
+export interface Project {
+  name: string
+  description: string
+  tags: { name: string; icon: any }[]
+  image: string
+  sourceCodeLink?: string
+  liveDemoLink?: string
+  photos?: string[]
+}
 
-const projects = [
+const projects: Project[] = [
   {
-    name: 'Car Rent',
+    name: 'Randell Comics',
     description:
-      'Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.',
+      'Web application to learn basic concepts of react and modern web developement. The website itself is a mock comic e-shop.',
     tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient'
-      },
-      {
-        name: 'mongodb',
-        color: 'green-text-gradient'
-      },
-      {
-        name: 'tailwind',
-        color: 'pink-text-gradient'
-      }
+      { name: 'react', icon: IconDictionary['react'] },
+      { name: 'typescript', icon: IconDictionary['typescript'] },
+      { name: 'redux', icon: IconDictionary['redux'] },
+      { name: 'firebase', icon: IconDictionary['firebase'] },
+      { name: 'netlify', icon: IconDictionary['netlify'] },
+      { name: 'stripe', icon: IconDictionary['stripe'] }
     ],
-    image: carrent,
-    source_code_link: 'https://github.com/'
+    image: rcomics,
+    sourceCodeLink: 'https://github.com/prandell/randell-comics',
+    liveDemoLink: 'https://unrivaled-naiad-04eaf8.netlify.app/'
   },
   {
-    name: 'Job IT',
+    name: 'Illuminate',
     description:
-      'Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.',
+      'Corporate web application that helps clients analyse their supply chains and respond to risks. Code unavailable, Click to view images.',
     tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient'
-      },
-      {
-        name: 'restapi',
-        color: 'green-text-gradient'
-      },
-      {
-        name: 'scss',
-        color: 'pink-text-gradient'
-      }
+      { name: 'react', icon: IconDictionary['react'] },
+      { name: 'typescript', icon: IconDictionary['typescript'] },
+      { name: 'redux', icon: IconDictionary['nextjs'] },
+      { name: 'firebase', icon: IconDictionary['mapbox'] },
+      { name: 'netlify', icon: IconDictionary['elasticsearch'] },
+      { name: 'stripe', icon: IconDictionary['azuredevops'] },
+      { name: 'postgres', icon: IconDictionary['postgres'] },
+      { name: 'docker', icon: IconDictionary['docker'] },
+      { name: 'vuejs', icon: IconDictionary['vuejs'] },
+      { name: 'nestjs', icon: IconDictionary['nestjs'] }
     ],
-    image: jobit,
-    source_code_link: 'https://github.com/'
-  },
-  {
-    name: 'Trip Guide',
-    description:
-      'A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.',
-    tags: [
-      {
-        name: 'nextjs',
-        color: 'blue-text-gradient'
-      },
-      {
-        name: 'supabase',
-        color: 'green-text-gradient'
-      },
-      {
-        name: 'css',
-        color: 'pink-text-gradient'
-      }
-    ],
-    image: tripguide,
-    source_code_link: 'https://github.com/'
+    image: map,
+    photos: []
   }
 ]
 
-export { services, technologies, experiences, testimonials, projects }
+export { experiences, projects }

@@ -1,7 +1,9 @@
 import React from 'react'
+import TechCloud from './TechCloud/TechCloud'
+import SectionWrapper from './SectionWrapper/SectionWrapper'
 
 const Tech: React.FC = () => {
-  return <div>Tech</div>
+  return <TechCloud />
 }
 
-export default Tech
+export default SectionWrapper(Tech, '')

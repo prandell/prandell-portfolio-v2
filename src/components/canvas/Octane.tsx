@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Preload, useGLTF } from '@react-three/drei'
-
-import CanvasLoader from '../Loader'
+import { CanvasLoader } from './'
 
 const Octane: React.FC<any> = ({ isMobile }) => {
   const computer = useGLTF('./octane/scene.gltf')

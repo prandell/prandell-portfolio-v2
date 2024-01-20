@@ -1,7 +1,11 @@
 import React, { MouseEvent, useEffect, useRef } from 'react'
 import { BubbleTextLetter } from './BubbleText.styles'
 
-interface BubbleTextProps {
+interface BubbleTextProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLHeadingElement>,
+    HTMLHeadingElement
+  > {
   bubbleText: string
   off?: boolean
   id: string
@@ -47,7 +51,12 @@ const bubbleCharOnHover = (
   nextNextEl && nextNextEl.classList.add(`hover-text-adj-adj-${id}`)
 }
 
-const BubbleText: React.FC<BubbleTextProps> = ({ bubbleText, id, off }) => {
+const BubbleText: React.FC<BubbleTextProps> = ({
+  bubbleText,
+  id,
+  off,
+  ...props
+}) => {
   const bubbleChars = useRef<HTMLHeadingElement | any>()
 
   const removeClasses = () => {
@@ -65,7 +74,12 @@ const BubbleText: React.FC<BubbleTextProps> = ({ bubbleText, id, off }) => {
   }, [off])
 
   return (
-    <BubbleTextLetter id={id} ref={bubbleChars} onMouseLeave={removeClasses}>
+    <BubbleTextLetter
+      id={id}
+      ref={bubbleChars}
+      onMouseLeave={removeClasses}
+      {...props}
+    >
       {bubbleText.split('').map((child, idx) => (
         <span
           onMouseOver={(e) => {
