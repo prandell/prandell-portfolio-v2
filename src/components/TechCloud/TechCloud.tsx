@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Cloud, IOptions, renderSimpleIcon } from 'react-icon-cloud'
 import { StyledTechCloud } from './TechCloud.styles'
 
@@ -89,7 +89,7 @@ const icons = [
 ].map((icon) => {
   return renderSimpleIcon({
     icon,
-    size: 42,
+    size: 90,
     minContrastRatio: 0,
     aProps: {
       onClick: (e) => e.preventDefault()
@@ -134,7 +134,7 @@ const TechCloud: React.FC = () => {
       <Cloud
         options={{
           ...tagCanvasOptions,
-          imageScale: isSkinny ? 0.5 : isMobile ? 0.3 : 0.2
+          imageScale: 10
         }}
       >
         {icons}
