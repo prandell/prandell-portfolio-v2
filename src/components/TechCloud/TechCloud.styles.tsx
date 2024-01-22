@@ -18,7 +18,7 @@ export const StyledTechCloud = styled.div`
     }
   }
 
-  @media (max-width: 300px) {
+  @media (max-width: 400px) {
     align-self: center;
     width: unset;
     * {

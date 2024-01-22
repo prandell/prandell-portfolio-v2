@@ -104,7 +104,7 @@ const TechCloud: React.FC = () => {
   useEffect(() => {
     // Add a listener for changes to the screen size
     const mediaQuery = window.matchMedia('(max-width: 800px)')
-    const mediaQuery2 = window.matchMedia('(max-width: 300px)')
+    const mediaQuery2 = window.matchMedia('(max-width: 400px)')
 
     // Set the initial value of the `isMobile` state variable
     setIsMobile(mediaQuery.matches)
@@ -134,7 +134,7 @@ const TechCloud: React.FC = () => {
       <Cloud
         options={{
           ...tagCanvasOptions,
-          imageScale: 10
+          imageScale: isSkinny ? 5 : isMobile ? 0.3 : 0.2
         }}
       >
         {icons}
