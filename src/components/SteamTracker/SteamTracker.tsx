@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactParallaxTilt from 'react-parallax-tilt'
 import { motion } from 'framer-motion'
 
 import { TransitionDirection, fadeIn } from '../../utils/motion'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { ISteamGame, steamGameState } from '../../state/steam.state'
 import { LiveBlinker } from './SteamTracker.styles'
+import { getLatestSteamGame } from '../../service/steam.service'
 
 interface SteamTrackerProps {}
 
@@ -18,6 +19,15 @@ const SteamTracker: React.FC<SteamTrackerProps> = ({}) => {
     achievementCount,
     achievementTotal
   } = useRecoilValue<ISteamGame>(steamGameState)
+  const setSteamGame = useSetRecoilState(steamGameState)
+
+  useEffect(() => {
+    const getGameAndUpdate = async () => {
+      const game = await getLatestSteamGame()
+      if (game) setSteamGame(game)
+    }
+    getGameAndUpdate()
+  }, [])
 
   return (
     <ReactParallaxTilt className="sm:w-[350px] w-full">
