@@ -103,7 +103,7 @@ The following instructions are the steps necessary to execute the application.
 
 ## Usage
 
-Skibbidy bup bup
+Skibbidy bup bup bah
 
 ```shell
 cd /path/to/repository
