@@ -18,8 +18,9 @@
     "typeRoots": [
       "./node_modules/@types/",
       "./src",
-      "./node_modules/.vite",
-      "./node_modules/vite"
+      "./node_modules/.vite/",
+      "./node_modules/vite-plugin-glsl/",
+      "./node_modules/vite/"
     ],
 
     /* Linting */
