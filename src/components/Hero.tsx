@@ -55,7 +55,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      {isMobile ? <OctaneCanvas /> : <div className="hero-container"></div>}
+      <div className="hero-container"></div>
 
       <div className="absolute bottom-3 sm:bottom-10 w-full flex justify-center sm:justify-end px-20 items-center">
         <a href="#about">
