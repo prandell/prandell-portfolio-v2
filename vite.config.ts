@@ -4,5 +4,6 @@ import * as glslify from 'vite-plugin-glslify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), glslify.glslify()]
+  plugins: [react(), glslify.glslify()],
+  build: { outDir: 'build' }
 })
