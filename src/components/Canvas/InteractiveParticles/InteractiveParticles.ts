@@ -2,7 +2,7 @@ import WebGLView from './WebGLView'
 
 export default class InteractiveParticles {
   webgl: WebGLView | undefined = undefined
-  handlerAnimate: any | undefined = undefined
+  handlerAnimate: any
   raf: number | undefined = undefined
   constructor() {}
 

@@ -7,24 +7,24 @@ import vert from '../../../assets/shaders/particle.vert'
 import frag from '../../../assets/shaders/particle.frag'
 
 export default class Particles {
-  webgl: any | undefined = undefined
+  webgl: any
   container: THREE.Object3D<THREE.Object3DEventMap>
   texture: THREE.Texture | undefined = undefined
-  width: any | undefined = undefined
-  height: any | undefined = undefined
+  width: any
+  height: any
   numPoints: number | undefined = undefined
   object3D: THREE.Mesh<
     THREE.InstancedBufferGeometry,
     THREE.RawShaderMaterial,
     THREE.Object3DEventMap
   > | null = null
-  touch: any | undefined = undefined
+  touch: any
   hitArea: THREE.Mesh<
     THREE.PlaneGeometry,
     THREE.MeshBasicMaterial,
     THREE.Object3DEventMap
   > | null = null
-  handlerInteractiveMove: any | undefined = undefined
+  handlerInteractiveMove: any
   constructor(webgl: any) {
     this.webgl = webgl
     this.container = new THREE.Object3D()
@@ -130,7 +130,8 @@ export default class Particles {
     const angles = new Float32Array(numVisible)
 
     for (let i = 0, j = 0; i < this.numPoints; i++) {
-      if (discard && originalColors[i * 4 + 0] <= threshold) continue
+      if (discard && originalColors && originalColors[i * 4 + 0] <= threshold)
+        continue
 
       offsets[j * 3 + 0] = i % this.width
       offsets[j * 3 + 1] = Math.floor(i / this.width)

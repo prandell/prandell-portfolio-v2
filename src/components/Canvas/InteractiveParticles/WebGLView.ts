@@ -12,8 +12,8 @@ export default class WebGLView {
   clock: any
   interactive: InteractiveControls | undefined = undefined
   particles: any
-  currSample: number = 0
-  fovHeight: number | null = null
+  currSample: null | number = null
+  fovHeight: number | undefined = undefined
   constructor(app: any) {
     this.app = app
 
