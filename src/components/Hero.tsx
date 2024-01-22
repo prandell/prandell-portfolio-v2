@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { styles } from '../styles'
 import { motion } from 'framer-motion'
-import { OctaneCanvas, InteractiveParticles } from './canvas'
+import { OctaneCanvas, InteractiveParticles } from './Canvas'
 
 const Hero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)

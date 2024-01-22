@@ -1,4 +1,4 @@
-import { EarthCanvas, OctaneCanvas, StarsCanvas } from './canvas'
+import { EarthCanvas, OctaneCanvas, StarsCanvas } from './Canvas'
 import Hero from './Hero'
 import Navbar from './Navbar'
 import About from './About'

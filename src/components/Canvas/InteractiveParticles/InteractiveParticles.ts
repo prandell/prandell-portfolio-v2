@@ -1,9 +1,9 @@
 import WebGLView from './WebGLView'
 
 export default class InteractiveParticles {
-  webgl: WebGLView
-  handlerAnimate: any
-  raf: number
+  webgl: WebGLView | undefined = undefined
+  handlerAnimate: any | undefined = undefined
+  raf: number | undefined = undefined
   constructor() {}
 
   init() {
@@ -25,7 +25,7 @@ export default class InteractiveParticles {
 
     window.addEventListener('resize', this.resize.bind(this))
 
-    const el = this.webgl.renderer.domElement
+    const el = this.webgl?.renderer.domElement
     el.addEventListener('click', this.click.bind(this))
   }
 
@@ -57,6 +57,6 @@ export default class InteractiveParticles {
   }
 
   click() {
-    this.webgl.next()
+    this.webgl?.next()
   }
 }

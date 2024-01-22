@@ -10,10 +10,10 @@ export default class WebGLView {
   camera: any
   renderer: any
   clock: any
-  interactive: InteractiveControls
+  interactive: InteractiveControls | undefined = undefined
   particles: any
-  currSample: null
-  fovHeight: number
+  currSample: number = 0
+  fovHeight: number | null = null
   constructor(app: any) {
     this.app = app
 
@@ -78,7 +78,7 @@ export default class WebGLView {
     this.renderer.render(this.scene, this.camera)
   }
 
-  goto(index) {
+  goto(index: number) {
     // init next
     if (this.currSample == null) this.particles.init(this.samples[index])
     // hide curr then init next

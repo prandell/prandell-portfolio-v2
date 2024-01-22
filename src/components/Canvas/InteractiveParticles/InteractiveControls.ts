@@ -22,13 +22,13 @@ export default class InteractiveControls extends EventEmitter {
   handlerMove: any
   handlerUp: any
   handlerLeave: any
-  rect: { x: any; y: any; width: any; height: any }
+  rect: { x: any; y: any; width: any; height: any } | undefined = undefined
   intersectionData: any
   get enabled() {
     return this._enabled
   }
 
-  constructor(camera, el) {
+  constructor(camera: any, el: any) {
     super()
 
     this.camera = camera
@@ -110,12 +110,12 @@ export default class InteractiveControls extends EventEmitter {
     }
   }
 
-  onMove(e) {
+  onMove(e: any) {
     const t = e.touches ? e.touches[0] : e
     const touch = { x: t.clientX, y: t.clientY }
 
-    this.mouse.x = ((touch.x + this.rect.x) / this.rect.width) * 2 - 1
-    this.mouse.y = -((touch.y + this.rect.y) / this.rect.height) * 2 + 1
+    this.mouse.x = ((touch.x + this.rect?.x) / this.rect?.width) * 2 - 1
+    this.mouse.y = -((touch.y + this.rect?.y) / this.rect?.height) * 2 + 1
 
     this.raycaster.setFromCamera(this.mouse, this.camera)
 
@@ -163,7 +163,7 @@ export default class InteractiveControls extends EventEmitter {
     }
   }
 
-  onDown(e) {
+  onDown(e: any) {
     this.isDown = true
     this.onMove(e)
 
@@ -181,15 +181,15 @@ export default class InteractiveControls extends EventEmitter {
     }
   }
 
-  onUp(e) {
+  onUp() {
     this.isDown = false
 
     this.emit('interactive-up', { object: this.hovered })
   }
 
-  onLeave(e) {
+  onLeave() {
     document.body.style.cursor = 'default'
-    this.onUp(e)
+    this.onUp()
     this.emit('interactive-out', { object: this.hovered })
     this.hovered = null
   }

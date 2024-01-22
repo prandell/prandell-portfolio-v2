@@ -7,30 +7,30 @@ import vert from '../../../assets/shaders/particle.vert'
 import frag from '../../../assets/shaders/particle.frag'
 
 export default class Particles {
-  webgl: any
+  webgl: any | undefined = undefined
   container: THREE.Object3D<THREE.Object3DEventMap>
-  texture: THREE.Texture
-  width: any
-  height: any
-  numPoints: number
+  texture: THREE.Texture | undefined = undefined
+  width: any | undefined = undefined
+  height: any | undefined = undefined
+  numPoints: number | undefined = undefined
   object3D: THREE.Mesh<
     THREE.InstancedBufferGeometry,
     THREE.RawShaderMaterial,
     THREE.Object3DEventMap
-  > | null
-  touch: any
+  > | null = null
+  touch: any | undefined = undefined
   hitArea: THREE.Mesh<
     THREE.PlaneGeometry,
     THREE.MeshBasicMaterial,
     THREE.Object3DEventMap
-  > | null
-  handlerInteractiveMove: any
-  constructor(webgl) {
+  > | null = null
+  handlerInteractiveMove: any | undefined = undefined
+  constructor(webgl: any) {
     this.webgl = webgl
     this.container = new THREE.Object3D()
   }
 
-  init(src) {
+  init(src: any) {
     const loader = new THREE.TextureLoader()
 
     loader.load(src, (texture) => {
@@ -50,19 +50,19 @@ export default class Particles {
     })
   }
 
-  initPoints(discard) {
+  initPoints(discard: any) {
     this.numPoints = this.width * this.height
 
     let numVisible = this.numPoints
     let threshold = 0
-    let originalColors
+    let originalColors: any
 
     if (discard) {
       // discard pixels darker than threshold #22
       numVisible = 0
       threshold = 34
 
-      const img = this.texture.image
+      const img = this.texture?.image
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
 
@@ -196,7 +196,7 @@ export default class Particles {
     )
 
     const index = this.webgl.interactive.objects.findIndex(
-      (obj) => obj === this.hitArea
+      (obj: any) => obj === this.hitArea
     )
     this.webgl.interactive.objects.splice(index, 1)
     this.webgl.interactive.disable()
@@ -206,7 +206,7 @@ export default class Particles {
   // PUBLIC
   // ---------------------------------------------------------------------------------------------
 
-  update(delta) {
+  update(delta: any) {
     if (!this.object3D) return
     if (this.touch) this.touch.update()
 
@@ -236,8 +236,8 @@ export default class Particles {
     // reset
   }
 
-  hide(_destroy, time = 0.8) {
-    return new Promise<void>((resolve, reject) => {
+  hide(_destroy: any, time = 0.8) {
+    return new Promise<void>((resolve) => {
       if (this.object3D) {
         TweenLite.to(this.object3D.material.uniforms.uRandom, time, {
           value: 5.0,
@@ -287,7 +287,7 @@ export default class Particles {
     if (this.hitArea) this.hitArea.scale.set(scale, scale, 1)
   }
 
-  onInteractiveMove(e) {
+  onInteractiveMove(e: any) {
     const uv = e.intersectionData.uv
     if (this.touch) this.touch.addTouch(uv)
   }

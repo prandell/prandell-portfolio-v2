@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 
 import { styles } from '../styles'
-import { EarthCanvas } from './canvas'
+import { EarthCanvas } from './Canvas'
 import { TransitionDirection, slideIn } from '../utils/motion'
 
 const Contact = () => {
@@ -27,7 +27,7 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
     setLoading(true)
 
