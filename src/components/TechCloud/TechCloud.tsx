@@ -134,7 +134,7 @@ const TechCloud: React.FC = () => {
       <Cloud
         options={{
           ...tagCanvasOptions,
-          imageScale: isSkinny ? 0.5 : isMobile ? 0.3 : 0.2
+          imageScale: 0.5
         }}
       >
         {icons}
