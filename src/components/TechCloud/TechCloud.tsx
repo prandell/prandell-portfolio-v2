@@ -89,6 +89,7 @@ const icons = [
 ].map((icon) => {
   return renderSimpleIcon({
     icon,
+    size: 42,
     minContrastRatio: 0,
     aProps: {
       onClick: (e) => e.preventDefault()
