@@ -14,13 +14,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    "typeRoots": [
-      "./node_modules/@types/",
-      "./src",
-      "./node_modules/.vite/",
-      "./node_modules/vite/"
-    ],
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": false,
