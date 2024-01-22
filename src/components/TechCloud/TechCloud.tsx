@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { Cloud, IOptions, renderSimpleIcon } from 'react-icon-cloud'
 import { StyledTechCloud } from './TechCloud.styles'
 
@@ -97,9 +97,36 @@ const icons = [
 })
 
 const TechCloud: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    // Add a listener for changes to the screen size
+    const mediaQuery = window.matchMedia('(max-width: 600px)')
+
+    // Set the initial value of the `isMobile` state variable
+    setIsMobile(mediaQuery.matches)
+
+    // Define a callback function to handle changes to the media query
+    const handleMediaQueryChange = (event: any) => {
+      setIsMobile(event.matches)
+    }
+
+    // Add the callback function as a listener for changes to the media query
+    mediaQuery.addEventListener('change', handleMediaQueryChange)
+
+    // Remove the listener when the component is unmounted
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange)
+    }
+  }, [])
+
   return (
     <StyledTechCloud>
-      <Cloud options={tagCanvasOptions}>{icons}</Cloud>
+      <Cloud
+        options={{ ...tagCanvasOptions, imageScale: isMobile ? 0.3 : 0.2 }}
+      >
+        {icons}
+      </Cloud>
     </StyledTechCloud>
   )
 }

@@ -8,7 +8,7 @@ export const StyledTechCloud = styled.div`
   text-align: center;
   * {
     margin: auto;
-    width: 68%;
+    width: 80%;
   }
   @media screen and (max-width: 800px) {
     align-self: center;
