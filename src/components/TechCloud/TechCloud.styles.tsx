@@ -17,4 +17,12 @@ export const StyledTechCloud = styled.div`
       width: 90%;
     }
   }
+
+  @media (max-width: 300px) {
+    align-self: center;
+    width: unset;
+    * {
+      width: 100%;
+    }
+  }
 `
