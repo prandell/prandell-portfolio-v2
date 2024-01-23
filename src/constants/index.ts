@@ -40,7 +40,7 @@ export interface Experience {
 
 const experiences: Experience[] = [
   {
-    title: 'Project lead - Senior Consultant',
+    title: 'Project Lead - Senior Consultant',
     company_name: 'Deloitte Australia - Illuminate',
     icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp',
     iconBg: 'black',
@@ -50,11 +50,11 @@ const experiences: Experience[] = [
       `Created a multi-faceted chatbot using LLM's and vector databases to extract structured information from user queries and answer questions over source documents.`,
       'Contributed to popular open-source generative AI software libraries',
       'Regularly demonstrated new features to large audiences (30+)',
-      'Managed and mentored team mates, contributing to their learning and developement'
+      'Managed and mentored team members, contributing to their learning and developement'
     ]
   },
   {
-    title: 'Project lead - Consultant',
+    title: 'Project Lead - Consultant',
     company_name: 'Deloitte Australia - Illuminate',
     icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp',
     iconBg: 'black',
