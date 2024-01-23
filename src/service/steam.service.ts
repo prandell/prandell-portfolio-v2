@@ -53,6 +53,7 @@ export const getLatestSteamGame = async () => {
       )
     })
   if (response) {
+    console.log(response)
     return handleSteamApiResponse(response)
   }
 }

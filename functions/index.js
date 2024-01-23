@@ -1,4 +1,5 @@
 const functions = require('firebase-functions')
+require('firebase-functions/logger/compat')
 const cors = require('cors')({ origin: true })
 const axios = require('axios')
 // // Create and Deploy Your First Cloud Functions
@@ -10,6 +11,7 @@ exports.getRecentGames = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
       axios.get(API_ENDPOINT).then(async (r) => {
         const data = r.data
+        console.log(data)
         if (data.response['total_count'] > 0) {
           data.response['games'].sort((a, b) => {
             if (a['playtime_2weeks'] > b['playtime_2weeks']) return -1
