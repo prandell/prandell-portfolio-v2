@@ -14,11 +14,11 @@ export interface ISteamGame {
 const initialState: ISteamGame = {
   appId: 252950,
   name: 'Rocket League',
-  playtime2Weeks: 120,
-  playtimeAllTime: 37451,
+  playtime2Weeks: 0,
+  playtimeAllTime: 59940,
   bannerUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/252950/header.jpg`,
   heroUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/252950/hero_capsule.jpg`,
-  achievementCount: 64,
+  achievementCount: 67,
   achievementTotal: 88
 }
 
