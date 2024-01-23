@@ -6,6 +6,7 @@ import SectionWrapper from './SectionWrapper/SectionWrapper'
 import { styles } from '../styles'
 import { EarthCanvas } from './Canvas'
 import { TransitionDirection, slideIn } from '../utils/motion'
+import { GithubIconLink, LinkedInIconLink } from './Icons'
 
 const Contact = () => {
   const formRef = useRef<any>()
@@ -120,12 +121,30 @@ const Contact = () => {
             />
           </label>
 
-          <button
-            type="submit"
-            className="bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary"
-          >
-            {loading ? 'Sending...' : 'Send'}
-          </button>
+          <div className="flex flex-row justify-between">
+            <button
+              type="submit"
+              className="bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white shadow-md shadow-primary"
+            >
+              {loading ? 'Sending...' : 'Send'}
+            </button>
+            <div className="flex items-center gap-1">
+              <a
+                className="flex justify-center h-[40px] w-[40px]"
+                target="_blank"
+                href="https://www.linkedin.com/in/randellp/"
+              >
+                <LinkedInIconLink size={30} />
+              </a>
+              <a
+                className="flex justify-center h-[40px] w-[40px]"
+                target="_blank"
+                href="https://github.com/prandell"
+              >
+                <GithubIconLink size={30} />
+              </a>
+            </div>
+          </div>
         </form>
       </motion.div>
 

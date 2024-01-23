@@ -160,13 +160,11 @@ const JUnitIcon = styled(SiJunit5)`
 `
 
 export const GithubIconLink = styled(SiGithub)`
-  height: 70%;
   align-self: center;
   fill: white;
 `
 
 export const LinkedInIconLink = styled(SiLinkedin)`
-  height: 70%;
   align-self: center;
   fill: white;
 `
