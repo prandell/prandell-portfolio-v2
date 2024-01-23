@@ -22,7 +22,8 @@ const About = () => {
         >
           {aboutMe.blurb}
           <a
-            className="text-[8px] w-fit"
+            className="text-[7px] w-fit"
+            target="_blank"
             href="https://rocketleague.tracker.network/rocket-league/profile/steam/76561199068492201/overview"
           >
             Also, check my Rocket League stats
