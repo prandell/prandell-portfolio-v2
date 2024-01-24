@@ -44,13 +44,19 @@ const Hero: React.FC = () => {
           <div className="w-1 sm:h-80 h-40 bg-gradient-to-b from-secondary" />
         </div>
 
-        <div>
+        <div className="flex flex-col pointer-events-auto">
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I'm <span className="text-secondary">Pat</span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100`}>
             A full-stack developer <br className="sm:block" />
             based in Melbourne
+          </p>
+          <p className="mt-5">
+            Ask me anything, using my&nbsp;
+            <a className="text-secondary" href="#contact">
+              AI chatbot
+            </a>
           </p>
         </div>
       </div>

@@ -13,12 +13,17 @@ const placeholders = [
   "Does Pat have experience with LLM's?"
 ]
 
+const defaultMessage: IChatMessage = {
+  message: "Hi I'm Patbot! Ask me anything",
+  isPb: true
+}
+
 const ChatWindow: React.FC = () => {
   const formRef = useRef<any>()
   const [question, setQuestion] = useState('')
 
   const [chatMessages, setChatMessages] = useState<IChatMessage[]>([
-    { message: "Hi I'm Patbot! Ask me anything", isPb: true }
+    defaultMessage
   ])
 
   const [placeholder, setPlaceholder] = useState(
@@ -50,7 +55,7 @@ const ChatWindow: React.FC = () => {
       e.preventDefault()
       setLoading(true)
       setChatMessages((cm) => {
-        return [...cm, { message: question, isPb: false }]
+        return [defaultMessage, { message: question, isPb: false }]
       })
       askPatbot(question).then((m: any) => {
         setChatMessages((cm) => [...cm, { message: m.data, isPb: true }])
