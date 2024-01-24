@@ -54,7 +54,7 @@ const ChatWindow: React.FC = () => {
     (e: any) => {
       e.preventDefault()
       setLoading(true)
-      setChatMessages((cm) => {
+      setChatMessages(() => {
         return [defaultMessage, { message: question, isPb: false }]
       })
       askPatbot(question).then((m: any) => {
