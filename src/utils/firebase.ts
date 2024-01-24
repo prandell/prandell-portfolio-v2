@@ -3,7 +3,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions'
 
 //Prandell portfolio Web App Configuration
 const firebaseConfig: FirebaseOptions = {
-  apiKey: 'AIzaSyCp6x58mB4Fs7BY_yjNfiCiyhF-QtQXWIg',
+  apiKey: process.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: 'prandell-portfolio.firebaseapp.com',
   projectId: 'prandell-portfolio',
   storageBucket: 'prandell-portfolio.appspot.com',
