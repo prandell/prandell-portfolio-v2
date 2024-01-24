@@ -56,10 +56,17 @@ const ChatWindow: React.FC = () => {
       setQuestion('')
       setLoading(true)
       setChatMessages(() => {
-        return [defaultMessage, { message: question, isPb: false }]
+        return [
+          defaultMessage,
+          { message: question, isPb: false },
+          { message: '', isPb: true, loading: true }
+        ]
       })
       askPatbot(question).then((m: any) => {
-        setChatMessages((cm) => [...cm, { message: m.data, isPb: true }])
+        setChatMessages((cm) => [
+          ...cm.slice(0, 2),
+          { message: m.data, isPb: true }
+        ])
         setLoading(false)
       })
     },
@@ -90,7 +97,12 @@ const ChatWindow: React.FC = () => {
       >
         <div className="flex flex-col bg-tertiary py-8 px-8 rounded-lg h-[300px] w-[100%] gap-3 overflow-x-scroll">
           {chatMessages.map((cm, i) => (
-            <ChatMessage message={cm.message} key={i} isPb={cm.isPb} />
+            <ChatMessage
+              message={cm.message}
+              key={i}
+              isPb={cm.isPb}
+              loading={cm.loading}
+            />
           ))}
         </div>
         <div className="flex flex-row justify-between items-center gap-3">
@@ -99,6 +111,15 @@ const ChatWindow: React.FC = () => {
             name="message"
             value={question}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.shiftKey && e.key === 'Enter') {
+                return
+              }
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                handleSubmit(e)
+              }
+            }}
             placeholder={placeholder}
             className="flex bg-tertiary py-4 px-6 w-[80%] placeholder:text-secondary placeholder:text-opacity-50 text-white rounded-lg outline-none border-none"
           />
