@@ -36,3 +36,6 @@ exports.getRecentGames = functions.https.onRequest((request, response) => {
     response.sendStatus(error)
   }
 })
+
+const ai = require('./ai')
+exports.askPatQuestion = ai.askPatQuestion

@@ -4,9 +4,9 @@ import emailjs from '@emailjs/browser'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 
 import { styles } from '../styles'
-import { EarthCanvas } from './Canvas'
 import { TransitionDirection, slideIn } from '../utils/motion'
 import { GithubIconLink, LinkedInIconLink } from './Icons'
+import ChatWindow from './ChatWindow/ChatWindow'
 
 const Contact = () => {
   const formRef = useRef<any>()
@@ -148,12 +148,13 @@ const Contact = () => {
         </form>
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         variants={slideIn(TransitionDirection.RIGHT, 'tween', 0.2, 1)}
         className="xl:flex-1 xl:h-auto md:h-[500px] h-[350px]"
       >
         <EarthCanvas />
-      </motion.div>
+      </motion.div> */}
+      <ChatWindow />
     </div>
   )
 }

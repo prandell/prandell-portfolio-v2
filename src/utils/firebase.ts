@@ -15,3 +15,4 @@ const firebaseConfig: FirebaseOptions = {
 const firebaseApp: FirebaseApp = initializeApp(firebaseConfig)
 const functions = getFunctions(firebaseApp)
 export const getRecentGames = httpsCallable(functions, 'getRecentGames')
+export const askPatQuestion = httpsCallable(functions, 'askPatQuestion')
