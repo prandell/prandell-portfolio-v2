@@ -53,6 +53,7 @@ const ChatWindow: React.FC = () => {
   const handleSubmit = useCallback(
     (e: any) => {
       e.preventDefault()
+      setQuestion('')
       setLoading(true)
       setChatMessages(() => {
         return [defaultMessage, { message: question, isPb: false }]

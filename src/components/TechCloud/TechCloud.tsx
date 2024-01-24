@@ -100,6 +100,9 @@ const icons = [
 const TechCloud: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [isSkinny, setIsSkinny] = useState(false)
+  const [isFirefox, setIsFirefox] = useState(
+    navigator.userAgent.toLowerCase().includes('firefox')
+  )
 
   useEffect(() => {
     // Add a listener for changes to the screen size
@@ -129,12 +132,14 @@ const TechCloud: React.FC = () => {
     }
   }, [])
 
+  const imageScale = isSkinny ? 1 : isMobile ? 0.7 : 0.8
+
   return (
     <StyledTechCloud>
       <Cloud
         options={{
           ...tagCanvasOptions,
-          imageScale: isSkinny ? 1 : isMobile ? 0.3 : 0.2
+          imageScale: isFirefox ? imageScale - 0.5 : imageScale
         }}
       >
         {icons}
