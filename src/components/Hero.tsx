@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
             A full-stack developer <br className="sm:block" />
             based in Melbourne
           </p>
-          <p className="mt-5">
+          <p className="mt-5 sm:max-w-[400px] max-w-[180px]">
             Ask me anything, using my&nbsp;
             <a className="text-secondary" href="#contact">
               AI chatbot

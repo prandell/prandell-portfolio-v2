@@ -10,8 +10,7 @@ import {
   Hero,
   Tech,
   Navbar,
-  Works,
-  StarsCanvas
+  Works
 } from './components'
 
 const App: React.FC = () => {
@@ -29,7 +28,6 @@ const App: React.FC = () => {
           <Works />
           <div className="relative z-0">
             <Contact />
-            <StarsCanvas />
           </div>
         </div>
       </BrowserRouter>
