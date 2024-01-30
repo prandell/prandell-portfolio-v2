@@ -8,7 +8,10 @@ import { askPatbot } from '../../service/ai.service'
 
 const placeholders = [
   'What front-end frameworks has Pat used?',
+  'What back-end languages does Pat know?',
   'Has Pat presented to large audiences?',
+  'What cloud experience does Pat have?',
+  "What Anime's is Pat watching right now?",
   "What is Pat's favourite game right now?",
   "Does Pat have experience with LLM's?"
 ]

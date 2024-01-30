@@ -20,10 +20,11 @@ He supports Manchester United.
 
 Patrick has also always been a gamer. 
 The first game he played was Pokemon Ruby on his Gameboy Advance. 
-He was always a Call of Duty player, loving Zombies (especially Black Ops 2 & 3). 
 After that, he fell in love with RPG games such as Skyrim and the Witcher. 
 Since then he has played all variety of games, from couch-coop games on the Nintendo Switch (overcooked) or recent souls-like games such as Elden Ring. 
 His absolute favourite game is Rocket League.
+
+Patrick loves anime. His first was Demon Slayer. His favourite is HunterxHunter or Full Metal Alchemist. He is currently watching Frieren: Beyond Journey's End.
 
 Patrick is also a big snowboarder, currently living and working in Whistler where he has honed his skills, able to go down double black diamond runs and do 360's in the snow park.
 
