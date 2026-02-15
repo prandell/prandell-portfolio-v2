@@ -1,6 +1,7 @@
 export interface SteamApiResponse {
   recentgames: SteamRecentGamesReponse
-  achievements: SteamAchievementsResponse
+  achievements: SteamAchievementsResponse | null
+  lastplayed?: Array<SteamOwnedGameResponse>
 }
 
 export interface SteamRecentGamesReponse {
@@ -32,4 +33,12 @@ export interface SteamGameResponse {
   playtime_windows_forever: number
   playtime_mac_forever: number
   playtime_linux_forever: number
+}
+
+export interface SteamOwnedGameResponse {
+  appid: number
+  name: string
+  playtime_forever: number
+  img_icon_url: string
+  rtime_last_played: number
 }

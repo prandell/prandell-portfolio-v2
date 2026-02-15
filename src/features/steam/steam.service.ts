@@ -1,22 +1,25 @@
 import type {
   SteamApiResponse,
   SteamAchievementResponse,
-  SteamGameResponse
+  SteamGameResponse,
+  SteamOwnedGameResponse
 } from './steam-response.model'
 import type { ISteamGame } from './steam.state'
 import { getRecentGames } from '../../lib/firebase'
+
+const CDN = 'https://cdn.cloudflare.steamstatic.com/steam/apps'
 
 const mapGame = (
   game: SteamGameResponse,
   achievements?: SteamApiResponse['achievements']
 ): ISteamGame => ({
-  appId: game['appid'],
-  name: game['name'],
-  playtime2Weeks: game['playtime_2weeks'],
-  playtimeAllTime: game['playtime_forever'],
-  bannerUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game['appid']}/header.jpg`,
-  capsuleUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game['appid']}/capsule_231x87.jpg`,
-  heroUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game['appid']}/hero_capsule.jpg`,
+  appId: game.appid,
+  name: game.name,
+  playtime2Weeks: game.playtime_2weeks,
+  playtimeAllTime: game.playtime_forever,
+  bannerUrl: `${CDN}/${game.appid}/header.jpg`,
+  capsuleUrl: `${CDN}/${game.appid}/capsule_231x87.jpg`,
+  heroUrl: `${CDN}/${game.appid}/hero_capsule.jpg`,
   achievementCount:
     achievements?.playerstats?.achievements?.reduce(
       (total: number, a: SteamAchievementResponse) => total + a.achieved,
@@ -26,9 +29,21 @@ const mapGame = (
     achievements?.playerstats?.achievements?.length ?? 0
 })
 
+const mapOwnedGame = (game: SteamOwnedGameResponse): ISteamGame => ({
+  appId: game.appid,
+  name: game.name,
+  playtime2Weeks: 0,
+  playtimeAllTime: game.playtime_forever,
+  bannerUrl: `${CDN}/${game.appid}/header.jpg`,
+  capsuleUrl: `${CDN}/${game.appid}/capsule_231x87.jpg`,
+  heroUrl: `${CDN}/${game.appid}/hero_capsule.jpg`,
+  achievementCount: 0,
+  achievementTotal: 0
+})
+
 interface SteamGamesResult {
   featured: ISteamGame
-  recentGames: ISteamGame[]
+  lastPlayed: ISteamGame[]
 }
 
 const handleSteamApiResponse = (
@@ -41,9 +56,13 @@ const handleSteamApiResponse = (
   ) {
     const games = response.recentgames.games
     if (games && games.length > 0) {
+      const lastPlayed = response.lastplayed?.length
+        ? response.lastplayed.map(mapOwnedGame)
+        : games.map((g) => mapGame(g))
+
       return {
         featured: mapGame(games[0], response.achievements),
-        recentGames: games.map((g) => mapGame(g))
+        lastPlayed
       }
     }
   }

@@ -69,7 +69,7 @@ const buildRecentItems = (games: ISteamGame[]): TrackerSegment[] =>
     {
       id: `name-${game.appId}`,
       kind: 'text' as const,
-      label: `${game.name} — ${Math.round(game.playtime2Weeks / 60)}h`
+      label: `${game.name} — ${Math.round(game.playtimeAllTime / 60)}h`
     }
   ])
 
@@ -128,7 +128,7 @@ const MarqueeBanner: React.FC<MarqueeBannerProps> = ({
 
 const SteamTracker: React.FC = () => {
   const [featured, setFeatured] = useState<ISteamGame>(initialSteamGameState)
-  const [recentGames, setRecentGames] = useState<ISteamGame[]>([
+  const [lastPlayed, setLastPlayed] = useState<ISteamGame[]>([
     initialSteamGameState
   ])
 
@@ -137,7 +137,7 @@ const SteamTracker: React.FC = () => {
       const result = await getLatestSteamGames()
       if (result) {
         setFeatured(result.featured)
-        setRecentGames(result.recentGames)
+        setLastPlayed(result.lastPlayed)
       }
     }
 
@@ -145,7 +145,7 @@ const SteamTracker: React.FC = () => {
   }, [])
 
   const featuredItems = useMemo(() => buildFeaturedItems(featured), [featured])
-  const recentItems = useMemo(() => buildRecentItems(recentGames), [recentGames])
+  const recentItems = useMemo(() => buildRecentItems(lastPlayed), [lastPlayed])
 
   return (
     <section className="flex w-full flex-col gap-2 bg-[linear-gradient(90deg,#1a1917,#26231f,#1a1917)] py-2">
