@@ -162,6 +162,15 @@
   }
 }
 
+@keyframes marquee-scroll-reverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes live-pulse {
   0% {
     transform: scale(0.75);

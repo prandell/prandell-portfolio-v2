@@ -90,6 +90,7 @@ export const copy = {
     nowPlaying: 'Now Playing',
     playtime2w: '2W Playtime',
     playtimeAll: 'All-Time Playtime',
-    achievements: 'Achievements'
+    achievements: 'Achievements',
+    recentlyPlayed: 'Recently Played'
   }
 } as const

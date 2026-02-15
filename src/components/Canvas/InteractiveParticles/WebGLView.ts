@@ -15,6 +15,7 @@ export default class WebGLView {
   currSample: null | number = null
   transitioning = false
   fovHeight: number | undefined = undefined
+  lastWidth: number = window.innerWidth
   constructor(app: any) {
     this.app = app
 
@@ -110,6 +111,11 @@ export default class WebGLView {
 
   resize() {
     if (!this.renderer) return
+
+    // On mobile, ignore height-only changes caused by browser chrome showing/hiding
+    const widthChanged = window.innerWidth !== this.lastWidth
+    if (!widthChanged && window.innerWidth < 640) return
+    this.lastWidth = window.innerWidth
 
     const isMobile = window.innerWidth < 640
     this.camera.position.x = isMobile ? 0 : -40

@@ -2,14 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import { initialSteamGameState } from '../../features/steam/steam.state'
 import type { ISteamGame } from '../../features/steam/steam.state'
-import { getLatestSteamGame } from '../../features/steam/steam.service'
+import { getLatestSteamGames } from '../../features/steam/steam.service'
 import { copy } from '../../lib/copy'
 
 type TrackerSegment =
   | {
       id: string
       kind: 'image'
-      bannerUrl: string
+      imageUrl: string
       alt: string
     }
   | {
@@ -18,12 +18,12 @@ type TrackerSegment =
       label: string
     }
 
-const buildBannerItems = (steamGame: ISteamGame): TrackerSegment[] => {
+const buildFeaturedItems = (steamGame: ISteamGame): TrackerSegment[] => {
   const {
     name,
     playtime2Weeks,
     playtimeAllTime,
-    bannerUrl,
+    capsuleUrl,
     achievementCount,
     achievementTotal
   } = steamGame
@@ -32,7 +32,7 @@ const buildBannerItems = (steamGame: ISteamGame): TrackerSegment[] => {
     {
       id: 'image',
       kind: 'image',
-      bannerUrl,
+      imageUrl: capsuleUrl,
       alt: name
     },
     {
@@ -58,59 +58,99 @@ const buildBannerItems = (steamGame: ISteamGame): TrackerSegment[] => {
   ]
 }
 
-const SteamTracker: React.FC = () => {
-  const [steamGame, setSteamGame] = useState<ISteamGame>(initialSteamGameState)
-
-  useEffect(() => {
-    const getGameAndUpdate = async () => {
-      const game = await getLatestSteamGame()
-      if (game) {
-        setSteamGame(game)
-      }
+const buildRecentItems = (games: ISteamGame[]): TrackerSegment[] =>
+  games.flatMap((game) => [
+    {
+      id: `img-${game.appId}`,
+      kind: 'image' as const,
+      imageUrl: game.capsuleUrl,
+      alt: game.name
+    },
+    {
+      id: `name-${game.appId}`,
+      kind: 'text' as const,
+      label: `${game.name} — ${Math.round(game.playtime2Weeks / 60)}h`
     }
+  ])
 
-    getGameAndUpdate()
-  }, [])
+interface MarqueeBannerProps {
+  items: TrackerSegment[]
+  duration?: number
+  reverse?: boolean
+}
 
-  const items = useMemo(() => buildBannerItems(steamGame), [steamGame])
-  const repeatedItems = useMemo(
-    () => Array.from({ length: 5 }, () => items).flat(),
+const MarqueeBanner: React.FC<MarqueeBannerProps> = ({
+  items,
+  duration = 32,
+  reverse = false
+}) => {
+  const repeated = useMemo(
+    () => Array.from({ length: Math.max(5, Math.ceil(20 / items.length)) * 2 }, () => items).flat(),
     [items]
   )
 
   return (
-    <section className="w-full bg-[linear-gradient(90deg,#1a1917,#26231f,#1a1917)] py-2">
-      <div className="w-full overflow-hidden">
-        <div
-          className="flex w-max min-w-[200%]"
-          style={{ animation: 'marquee-scroll 32s linear infinite' }}
-        >
-          {repeatedItems.map((item, index) => (
-            <article
-              key={`${item.id}-${index}`}
-              className="mr-3 inline-flex items-center gap-[10px] whitespace-nowrap bg-black/52 px-3 py-2 text-[#f0ece4]"
-            >
-              {item.kind === 'image' ? (
-                <img
-                  src={item.bannerUrl}
-                  alt={item.alt}
-                  className="h-[34px] w-auto object-cover"
+    <div className="w-full overflow-hidden">
+      <div
+        className="flex w-max min-w-[200%]"
+        style={{
+          animation: `${reverse ? 'marquee-scroll-reverse' : 'marquee-scroll'} ${duration}s linear infinite`
+        }}
+      >
+        {repeated.map((item, index) => (
+          <article
+            key={`${item.id}-${index}`}
+            className="mr-3 inline-flex items-center gap-[10px] whitespace-nowrap bg-black/52 px-3 py-2 text-[#f0ece4]"
+          >
+            {item.kind === 'image' ? (
+              <img
+                src={item.imageUrl}
+                alt={item.alt}
+                className="h-[34px] w-auto object-cover"
+              />
+            ) : (
+              <>
+                <span
+                  className="inline-flex h-2 w-2 rounded-full bg-white"
+                  style={{ animation: 'live-pulse 0.9s infinite alternate' }}
                 />
-              ) : (
-                <>
-                  <span
-                    className="inline-flex h-2 w-2 rounded-full bg-white"
-                    style={{ animation: 'live-pulse 0.9s infinite alternate' }}
-                  />
-                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#f0ece4]">
-                    {item.label}
-                  </p>
-                </>
-              )}
-            </article>
-          ))}
-        </div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#f0ece4]">
+                  {item.label}
+                </p>
+              </>
+            )}
+          </article>
+        ))}
       </div>
+    </div>
+  )
+}
+
+const SteamTracker: React.FC = () => {
+  const [featured, setFeatured] = useState<ISteamGame>(initialSteamGameState)
+  const [recentGames, setRecentGames] = useState<ISteamGame[]>([
+    initialSteamGameState
+  ])
+
+  useEffect(() => {
+    const fetch = async () => {
+      const result = await getLatestSteamGames()
+      if (result) {
+        setFeatured(result.featured)
+        setRecentGames(result.recentGames)
+      }
+    }
+
+    fetch()
+  }, [])
+
+  const featuredItems = useMemo(() => buildFeaturedItems(featured), [featured])
+  const recentItems = useMemo(() => buildRecentItems(recentGames), [recentGames])
+
+  return (
+    <section className="flex w-full flex-col gap-2 bg-[linear-gradient(90deg,#1a1917,#26231f,#1a1917)] py-2">
+      <MarqueeBanner items={featuredItems} duration={32} />
+      <MarqueeBanner items={recentItems} duration={32} reverse />
     </section>
   )
 }
