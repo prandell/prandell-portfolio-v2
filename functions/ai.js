@@ -48,31 +48,34 @@ Personal interests:
 
 Say "Sounds good, ready for questions!" if you understand.`
 
-exports.askPatQuestion = functions.https.onCall((data, _context) => {
-  try {
-    const original = data.text
+exports.askPatQuestion = functions.https.onCall(async (data, _context) => {
+  const original = data.text
 
+  if (!process.env['OPENAI_API_KEY']) {
+    console.error('OPENAI_API_KEY is not set')
+    throw new functions.https.HttpsError('internal', 'Service misconfigured')
+  }
+
+  try {
     const openai = new OpenAI({
-      apiKey: process.env['OPENAI_API_KEY'] // This is the default and can be omitted
+      apiKey: process.env['OPENAI_API_KEY']
     })
-    return openai.chat.completions
-      .create({
-        messages: [
-          { role: 'user', content: template },
-          { role: 'assistant', content: 'Sounds good, ready for questions!' },
-          { role: 'user', content: original }
-        ],
-        model: 'gpt-4o-mini'
-      })
-      .then((m) => {
-        return {
-          data: m.choices[0].message.content
-        }
-      })
-  } catch {
+    const m = await openai.chat.completions.create({
+      messages: [
+        { role: 'user', content: template },
+        { role: 'assistant', content: 'Sounds good, ready for questions!' },
+        { role: 'user', content: original }
+      ],
+      model: 'gpt-4o-mini'
+    })
+    return {
+      data: m.choices[0].message.content
+    }
+  } catch (error) {
+    console.error('OpenAI API error:', error)
     throw new functions.https.HttpsError(
-      'internal-server-error',
-      'Unknown error occured'
+      'internal',
+      'Failed to get response from AI'
     )
   }
 })
