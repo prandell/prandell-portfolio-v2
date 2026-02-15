@@ -1,5 +1,5 @@
-import React, { MouseEvent, useEffect, useRef } from 'react'
-import { BubbleTextLetter } from './BubbleText.styles'
+import React, { useEffect, useRef } from 'react'
+import type { MouseEvent } from 'react'
 
 interface BubbleTextProps
   extends React.DetailedHTMLProps<
@@ -8,27 +8,26 @@ interface BubbleTextProps
   > {
   bubbleText: string
   off?: boolean
-  id: string
 }
 
 const prevIndexFinder = (idx: number | null) => {
-  return idx == 0 || idx == null ? null : idx - 1
+  return idx === 0 || idx === null ? null : idx - 1
 }
 
 const nextIndexFinder = (idx: number | null, wordLength: number) => {
-  return idx == null || idx == wordLength - 1 ? null : idx + 1
+  return idx === null || idx === wordLength - 1 ? null : idx + 1
 }
 
-const getElByIdx = (idx: number | null, id: string) => {
+const getElByIdx = (idx: number | null, container: HTMLElement) => {
   return idx !== null
-    ? document.querySelector(`.bubble-char-${id}[data-index="${idx}"]`)
+    ? container.querySelector(`.bubble-char[data-index="${idx}"]`)
     : null
 }
 
 const bubbleCharOnHover = (
   e: MouseEvent<HTMLSpanElement>,
   textLength: number,
-  id: string
+  container: HTMLElement
 ) => {
   const el = e.currentTarget
   const hoverIdxRaw = el.getAttribute('data-index')
@@ -39,33 +38,36 @@ const bubbleCharOnHover = (
   const prevPrevIdx = prevIndexFinder(prevIdx)
   const nextNextIdx = nextIndexFinder(nextIdx, textLength)
 
-  const prevEl = getElByIdx(prevIdx, id)
-  const prevPrevEl = getElByIdx(prevPrevIdx, id)
-  const nextEl = getElByIdx(nextIdx, id)
-  const nextNextEl = getElByIdx(nextNextIdx, id)
+  const prevEl = getElByIdx(prevIdx, container)
+  const prevPrevEl = getElByIdx(prevPrevIdx, container)
+  const nextEl = getElByIdx(nextIdx, container)
+  const nextNextEl = getElByIdx(nextNextIdx, container)
 
-  el.classList.add(`hover-text-${id}`)
-  prevEl && prevEl.classList.add(`hover-text-adj-${id}`)
-  nextEl && nextEl.classList.add(`hover-text-adj-${id}`)
-  prevPrevEl && prevPrevEl.classList.add(`hover-text-adj-adj-${id}`)
-  nextNextEl && nextNextEl.classList.add(`hover-text-adj-adj-${id}`)
+  el.classList.add('hover-active')
+  prevEl && prevEl.classList.add('hover-adj')
+  nextEl && nextEl.classList.add('hover-adj')
+  prevPrevEl && prevPrevEl.classList.add('hover-adj-adj')
+  nextNextEl && nextNextEl.classList.add('hover-adj-adj')
 }
 
 const BubbleText: React.FC<BubbleTextProps> = ({
   bubbleText,
-  id,
   off,
   ...props
 }) => {
-  const bubbleChars = useRef<HTMLHeadingElement | any>()
+  const bubbleChars = useRef<HTMLHeadingElement | null>(null)
 
   const removeClasses = () => {
     const children = bubbleChars.current?.children ?? []
 
-    Array.from(children).forEach((c: any) => {
-      c.classList.remove(`hover-text-${id}`)
-      c.classList.remove(`hover-text-adj-${id}`)
-      c.classList.remove(`hover-text-adj-adj-${id}`)
+    Array.from(children).forEach((child) => {
+      if (!(child instanceof HTMLElement)) {
+        return
+      }
+
+      child.classList.remove('hover-active')
+      child.classList.remove('hover-adj')
+      child.classList.remove('hover-adj-adj')
     })
   }
 
@@ -74,8 +76,7 @@ const BubbleText: React.FC<BubbleTextProps> = ({
   }, [off])
 
   return (
-    <BubbleTextLetter
-      id={id}
+    <h2
       ref={bubbleChars}
       onMouseLeave={removeClasses}
       {...props}
@@ -84,16 +85,18 @@ const BubbleText: React.FC<BubbleTextProps> = ({
         <span
           onMouseOver={(e) => {
             removeClasses()
-            !off && bubbleCharOnHover(e, bubbleText.length, id)
+            if (!off && bubbleChars.current) {
+              bubbleCharOnHover(e, bubbleText.length, bubbleChars.current)
+            }
           }}
-          className={`bubble-char-${id}`}
+          className="bubble-char"
           data-index={idx}
           key={idx}
         >
           {child}
         </span>
       ))}
-    </BubbleTextLetter>
+    </h2>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
-import { TypingDots } from './ChatMessage.styles'
+
+import { copy } from '../../lib/copy'
 
 export interface IChatMessage {
   message: string
@@ -7,13 +8,20 @@ export interface IChatMessage {
   loading?: boolean
 }
 
-const MessageFill: React.FC<Omit<IChatMessage, 'isPb'>> = ({
+const MessageFill: React.FC<Pick<IChatMessage, 'message' | 'loading' | 'isPb'>> = ({
   message,
-  loading
+  loading,
+  isPb
 }) => {
   return (
-    <p className="flex w-fit max-w-[80%] justify-end bg-secondary py-3 px-3 rounded-2xl">
-      {loading ? <TypingDots /> : `${message}`}
+    <p
+      className={`flex w-fit max-w-[85%] justify-end px-3 py-3 text-[13px] leading-[1.5] ${
+        isPb
+          ? 'bg-[#f2ede3] text-[#121212]'
+          : 'bg-[#191919] text-[#f2ede3]'
+      }`}
+    >
+      {loading ? <span className="typing-dots" /> : message}
     </p>
   )
 }
@@ -21,16 +29,21 @@ const MessageFill: React.FC<Omit<IChatMessage, 'isPb'>> = ({
 const ChatMessage: React.FC<IChatMessage> = ({ message, isPb, loading }) => {
   return (
     <div
-      className={`flex text-primary flex-row gap-3 justify-${
-        isPb ? 'left' : 'end'
-      } items-center`}
+      className={`flex flex-row items-start gap-2 ${
+        isPb ? 'justify-start' : 'justify-end'
+      }`}
     >
-      {!isPb && <MessageFill message={message} loading={loading} />}
+      {!isPb && <MessageFill message={message} loading={loading} isPb={isPb} />}
 
-      <p className="flex text-center justify-center items-center bg-amber-400 rounded-full w-[42px] h-[42px]">
-        {isPb ? '\uD83E\uDD16' : '\uD83D\uDC7E'}
+      <p
+        className={`font-mono flex h-[30px] w-[30px] items-center justify-center text-[9px] uppercase tracking-[0.1em] ${
+          isPb ? 'bg-[#f2ede3] text-[#111]' : 'bg-[#1d1d1d] text-[#f2ede3]'
+        }`}
+      >
+        {isPb ? copy.chat.aiLabel : copy.chat.youLabel}
       </p>
-      {isPb && <MessageFill message={message} loading={loading} />}
+
+      {isPb && <MessageFill message={message} loading={loading} isPb={isPb} />}
     </div>
   )
 }

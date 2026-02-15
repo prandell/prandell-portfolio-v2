@@ -1,8 +1,8 @@
-import EventEmitter from 'events'
 import * as THREE from 'three'
 import browser from 'browser-detect'
 
-import { passiveEvent } from '../../../utils/event'
+import { passiveEvent } from '../../../lib/event'
+import { EventEmitter } from '../../../lib/event-emitter'
 
 export default class InteractiveControls extends EventEmitter {
   _enabled: any
@@ -65,34 +65,26 @@ export default class InteractiveControls extends EventEmitter {
   }
 
   addListeners() {
+    if (this.browser.mobile) return
+
     this.handlerDown = this.onDown.bind(this)
     this.handlerMove = this.onMove.bind(this)
     this.handlerUp = this.onUp.bind(this)
     this.handlerLeave = this.onLeave.bind(this)
 
-    if (this.browser.mobile) {
-      this.el.addEventListener('touchstart', this.handlerDown, passiveEvent)
-      this.el.addEventListener('touchmove', this.handlerMove, passiveEvent)
-      this.el.addEventListener('touchend', this.handlerUp, passiveEvent)
-    } else {
-      this.el.addEventListener('mousedown', this.handlerDown)
-      this.el.addEventListener('mousemove', this.handlerMove)
-      this.el.addEventListener('mouseup', this.handlerUp)
-      this.el.addEventListener('mouseleave', this.handlerLeave)
-    }
+    this.el.addEventListener('mousedown', this.handlerDown)
+    this.el.addEventListener('mousemove', this.handlerMove)
+    this.el.addEventListener('mouseup', this.handlerUp)
+    this.el.addEventListener('mouseleave', this.handlerLeave)
   }
 
   removeListeners() {
-    if (this.browser.mobile) {
-      this.el.removeEventListener('touchstart', this.handlerDown)
-      this.el.removeEventListener('touchmove', this.handlerMove)
-      this.el.removeEventListener('touchend', this.handlerUp)
-    } else {
-      this.el.removeEventListener('mousedown', this.handlerDown)
-      this.el.removeEventListener('mousemove', this.handlerMove)
-      this.el.removeEventListener('mouseup', this.handlerUp)
-      this.el.removeEventListener('mouseleave', this.handlerLeave)
-    }
+    if (this.browser.mobile) return
+
+    this.el.removeEventListener('mousedown', this.handlerDown)
+    this.el.removeEventListener('mousemove', this.handlerMove)
+    this.el.removeEventListener('mouseup', this.handlerUp)
+    this.el.removeEventListener('mouseleave', this.handlerLeave)
   }
 
   resize(x?: any, y?: any, width?: any, height?: any) {

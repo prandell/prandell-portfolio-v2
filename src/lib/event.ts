@@ -1,7 +1,7 @@
 let alreadyTested = false
 let passiveSupported = false
 
-const isSupported = () => {
+const isSupported = (): boolean => {
   if (alreadyTested) return passiveSupported
   alreadyTested = true
 
@@ -9,19 +9,21 @@ const isSupported = () => {
   const opts = Object.defineProperty({}, 'passive', {
     get: () => {
       passiveSupported = true
+      return passiveSupported
     }
   })
-  const wndw = window as any
+  const wndw = window
+  const noop = () => {}
   try {
-    wndw.addEventListener('test', null, opts) as any
-  } catch (e) {
+    wndw.addEventListener('test', noop, opts as AddEventListenerOptions)
+  } catch {
     return passiveSupported
   }
-  wndw.removeEventListener('test', null, opts) as any
+  wndw.removeEventListener('test', noop, opts as AddEventListenerOptions)
   return passiveSupported
 }
 
-const passiveEvent = () => {
+const passiveEvent = (): AddEventListenerOptions | boolean => {
   return isSupported() ? { passive: true } : false
 }
 

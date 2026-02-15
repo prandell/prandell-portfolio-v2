@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { Cloud, IOptions, renderSimpleIcon } from 'react-icon-cloud'
-import { StyledTechCloud } from './TechCloud.styles'
+import React from 'react'
+import { Cloud, renderSimpleIcon } from 'react-icon-cloud'
+import type { IOptions } from 'react-icon-cloud'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 // Ugly icon imports for icon cloud
 import {
   siJavascript,
   siTypescript,
   siGit,
-  siCss3,
+  siCss,
   siHtml5,
   siNodedotjs,
   siDatabricks,
-  siMicrosoftsqlserver,
+  siMysql,
   siReact,
   siThreedotjs,
   siPython,
-  siAmazonaws,
+  siGooglecloud,
   siServerless,
-  siOpenai,
+  siOpenaigym,
   siFirebase,
-  siAzuredevops,
+  siJira,
   siPostgresql,
   siAlibabacloud,
-  siAwslambda,
-  siAzurepipelines,
+  siCloudflare,
+  siGithubactions,
   siFigma,
   siNestjs,
   siAnsible,
@@ -51,7 +52,7 @@ const tagCanvasOptions: IOptions = {
 
 //change colour of black icons
 siThreedotjs.hex = '#fff'
-siAmazonaws.hex = '#f79400'
+siGooglecloud.hex = '#f79400'
 siApachekafka.hex = '#04a0d5'
 
 // Render icons to work with icon cloud API
@@ -60,24 +61,24 @@ const icons = [
   siTypescript,
   siDatabricks,
   siGit,
-  siOpenai,
-  siCss3,
+  siOpenaigym,
+  siCss,
   siHtml5,
   siNodedotjs,
-  siMicrosoftsqlserver,
+  siMysql,
   siReact,
   siThreedotjs,
   siNginx,
   siDocker,
   siPython,
-  siAmazonaws,
+  siGooglecloud,
   siServerless,
   siFirebase,
-  siAzuredevops,
+  siJira,
   siPostgresql,
   siAlibabacloud,
-  siAwslambda,
-  siAzurepipelines,
+  siCloudflare,
+  siGithubactions,
   siFigma,
   siVuedotjs,
   siNestjs,
@@ -98,44 +99,15 @@ const icons = [
 })
 
 const TechCloud: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(false)
-  const [isSkinny, setIsSkinny] = useState(false)
-  const [isFirefox, setIsFirefox] = useState(
+  const isMobile = useMediaQuery('(max-width: 800px)')
+  const isSkinny = useMediaQuery('(max-width: 400px)')
+  const isFirefox =
     navigator.userAgent.toLowerCase().includes('firefox')
-  )
-
-  useEffect(() => {
-    // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia('(max-width: 800px)')
-    const mediaQuery2 = window.matchMedia('(max-width: 400px)')
-
-    // Set the initial value of the `isMobile` state variable
-    setIsMobile(mediaQuery.matches)
-    setIsSkinny(mediaQuery2.matches)
-
-    // Define a callback function to handle changes to the media query
-    const handleMediaQueryChange = (event: any) => {
-      setIsMobile(event.matches)
-    }
-    const handleMedia2QueryChange = (event: any) => {
-      setIsSkinny(event.matches)
-    }
-
-    // Add the callback function as a listener for changes to the media query
-    mediaQuery.addEventListener('change', handleMediaQueryChange)
-    mediaQuery2.addEventListener('change', handleMedia2QueryChange)
-
-    // Remove the listener when the component is unmounted
-    return () => {
-      mediaQuery.removeEventListener('change', handleMediaQueryChange)
-      mediaQuery2.removeEventListener('change', handleMedia2QueryChange)
-    }
-  }, [])
 
   const imageScale = isSkinny ? 1 : isMobile ? 0.7 : 0.8
 
   return (
-    <StyledTechCloud>
+    <div className="tech-cloud">
       <Cloud
         options={{
           ...tagCanvasOptions,
@@ -144,7 +116,7 @@ const TechCloud: React.FC = () => {
       >
         {icons}
       </Cloud>
-    </StyledTechCloud>
+    </div>
   )
 }
 

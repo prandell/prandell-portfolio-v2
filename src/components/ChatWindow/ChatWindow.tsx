@@ -1,141 +1,170 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useCallback, useRef, useState } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
 
-import { styles } from '../../styles'
-import { TransitionDirection, fadeIn, slideIn } from '../../utils/motion'
-import ChatMessage, { IChatMessage } from './ChatMessage'
-import { askPatbot } from '../../service/ai.service'
-
-const placeholders = [
-  'What front-end frameworks has Pat used?',
-  'What back-end languages does Pat know?',
-  'Has Pat presented to large audiences?',
-  'What cloud experience does Pat have?',
-  "What Anime's is Pat watching right now?",
-  "What is Pat's favourite game right now?",
-  "Does Pat have experience with LLM's?"
-]
+import ChatMessage from './ChatMessage'
+import type { IChatMessage } from './ChatMessage'
+import { askPatbot, type AskPatbotResponse } from '../../features/chat/ai.service'
+import { copy } from '../../lib/copy'
+import { styles, panels, inputs } from '../../config/styles'
+import { BrutalButton, DialogChip } from '../ui'
+import SectionWrapper from '../SectionWrapper/SectionWrapper'
 
 const defaultMessage: IChatMessage = {
-  message: "Hi I'm Patbot! Ask me anything",
+  message: copy.chat.defaultMessage,
   isPb: true
 }
 
 const ChatWindow: React.FC = () => {
-  const formRef = useRef<any>()
+  const formRef = useRef<HTMLFormElement | null>(null)
+  const launchInputRef = useRef<HTMLInputElement | null>(null)
+
+  const [open, setOpen] = useState(false)
   const [question, setQuestion] = useState('')
-
-  const [chatMessages, setChatMessages] = useState<IChatMessage[]>([
-    defaultMessage
-  ])
-
-  const [placeholder, setPlaceholder] = useState(
-    "Does Pat have experience with LLM's?"
-  )
-
+  const [messages, setMessages] = useState<IChatMessage[]>([defaultMessage])
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: any) => {
-    setQuestion(e.target.value)
-  }
+  const sendQuestion = useCallback(
+    (rawQuestion: string) => {
+      const nextQuestion = rawQuestion.trim()
+      if (!nextQuestion || loading) {
+        return
+      }
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setPlaceholder((p) => {
-        const ind = placeholders.findIndex((v) => v === p)
-        const newInd = (ind + 1) % placeholders.length
-        return placeholders[newInd]
-      })
-    }, 3000)
-
-    return () => {
-      clearInterval(id)
-    }
-  }, [])
-
-  const handleSubmit = useCallback(
-    (e: any) => {
-      e.preventDefault()
       setQuestion('')
       setLoading(true)
-      setChatMessages(() => {
-        return [
-          defaultMessage,
-          { message: question, isPb: false },
-          { message: '', isPb: true, loading: true }
-        ]
-      })
-      askPatbot(question).then((m: any) => {
-        setChatMessages((cm) => [
-          ...cm.slice(0, 2),
-          { message: m.data, isPb: true }
-        ])
+
+      setMessages((current) => [
+        ...current,
+        { message: nextQuestion, isPb: false },
+        { message: '', isPb: true, loading: true }
+      ])
+
+      askPatbot(nextQuestion).then((m?: AskPatbotResponse) => {
+        setMessages((current) => {
+          const withoutLoader = current.filter((message) => !message.loading)
+          return [
+            ...withoutLoader,
+            {
+              message: m?.data ?? copy.chat.fallbackResponse,
+              isPb: true
+            }
+          ]
+        })
         setLoading(false)
       })
     },
-    [question]
+    [loading]
+  )
+
+  const handleSubmit = useCallback(
+    (e: { preventDefault: () => void }) => {
+      e.preventDefault()
+      sendQuestion(question)
+    },
+    [question, sendQuestion]
   )
 
   return (
-    <motion.div
-      variants={slideIn(TransitionDirection.RIGHT, 'tween', 0.2, 1)}
-      className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
-    >
-      <p className={styles.sectionSubText}>Ask me anything</p>
-      <h3 className={styles.sectionHeadText}>Patbot</h3>
+    <>
+      <div>
+        <p className={styles.sectionSubText}>{copy.chat.panelSubheading}</p>
+        <h2 className={styles.sectionHeadText}>{copy.chat.panelHeading}</h2>
+      </div>
 
-      <motion.p
-        variants={fadeIn(TransitionDirection.NONE, '', 0.1, 1)}
-        className="mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]"
-      >
-        Patbot is an AI chatbot trained on my personal and professional
-        information. Ask Patbot anything about my interests, education, or work
-        experience.
-      </motion.p>
+      <div className={`${panels.ink} mt-4 px-4 py-4 sm:px-6 sm:py-5`}>
+        <p className="text-[16px] leading-[1.7] text-[#ddd8cf]">
+          {copy.chat.panelDescription}
+        </p>
 
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="mt-6 flex flex-col gap-6 justify-between"
-      >
-        <div className="flex flex-col bg-tertiary py-8 px-8 rounded-lg h-[300px] w-[100%] gap-3 overflow-x-scroll">
-          {chatMessages.map((cm, i) => (
-            <ChatMessage
-              message={cm.message}
-              key={i}
-              isPb={cm.isPb}
-              loading={cm.loading}
-            />
-          ))}
-        </div>
-        <div className="flex flex-row justify-between items-center gap-3">
-          <textarea
-            rows={3}
-            name="message"
-            value={question}
-            onChange={handleChange}
-            onKeyDown={(e) => {
-              if (e.shiftKey && e.key === 'Enter') {
-                return
-              }
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                handleSubmit(e)
-              }
-            }}
-            placeholder={placeholder}
-            className="flex bg-tertiary py-4 px-6 w-[80%] placeholder:text-secondary placeholder:text-opacity-50 text-white rounded-lg outline-none border-none"
-          />
-          <button
-            type="submit"
-            className="flex items-center justify-center bg-tertiary w-[60px] h-[60px] rounded-full outline-none  text-white shadow-md shadow-primary"
-          >
-            {loading ? '...' : '\u21b5'}
-          </button>
-        </div>
-      </form>
-    </motion.div>
+        <input
+          ref={launchInputRef}
+          type="text"
+          readOnly
+          value=""
+          onFocus={() => {
+            setOpen(true)
+            window.setTimeout(() => launchInputRef.current?.blur(), 10)
+          }}
+          onClick={() => setOpen(true)}
+          placeholder={copy.chat.inputPlaceholder}
+          className={`${inputs.contact} mt-7 min-h-[68px] px-6 py-5 text-xl placeholder:text-[#6d685f]`}
+        />
+      </div>
+
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-60 bg-[rgba(8,8,8,0.78)] backdrop-blur-[2px]" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 z-65 w-[min(880px,calc(100%-28px))] max-h-[calc(100vh-36px)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto bg-[#141414] p-5 shadow-[12px_12px_0_#070707] max-md:w-[calc(100%-20px)] max-md:max-h-[calc(100vh-20px)] max-md:p-3.5">
+            <div className="flex items-center justify-between gap-3">
+              <Dialog.Title className="font-display text-[24px] uppercase tracking-[0.06em] text-[#f0ece3]">
+                {copy.chat.dialogTitle}
+              </Dialog.Title>
+              <Dialog.Close asChild>
+                <button
+                  className="border border-white/24 bg-[#171717] px-2.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#ece8df]"
+                  type="button"
+                >
+                  {copy.chat.closeLabel}
+                </button>
+              </Dialog.Close>
+            </div>
+
+            <p className="font-mono mt-1 text-[10px] uppercase tracking-[0.18em] text-[#b4aea2]">
+              {copy.chat.dialogSubheading}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {copy.chat.sampleQuestions.map((sample) => (
+                <DialogChip key={sample} onClick={() => sendQuestion(sample)}>
+                  {sample}
+                </DialogChip>
+              ))}
+            </div>
+
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="mt-5 flex flex-col gap-4"
+            >
+              <div className="flex h-80 max-md:h-[280px] flex-col gap-2.5 overflow-y-auto bg-[#0f0f0f] p-3.5">
+                {messages.map((cm, i) => (
+                  <ChatMessage
+                    message={cm.message}
+                    key={i}
+                    isPb={cm.isPb}
+                    loading={cm.loading}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-end gap-3">
+                <textarea
+                  rows={3}
+                  name="message"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.shiftKey && e.key === 'Enter') {
+                      return
+                    }
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      handleSubmit(e)
+                    }
+                  }}
+                  placeholder={copy.chat.dialogInputPlaceholder}
+                  className={inputs.dialog}
+                />
+                <BrutalButton as="button" type="submit" className="px-4 py-2 text-[10px] leading-none">
+                  {loading ? copy.chat.sendingLabel : copy.chat.sendLabel}
+                </BrutalButton>
+              </div>
+            </form>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
   )
 }
 
-export default ChatWindow
+export default SectionWrapper(ChatWindow, 'assistant')

@@ -1,16 +1,24 @@
-import React, { useEffect } from 'react'
-import ReactParallaxTilt from 'react-parallax-tilt'
-import { motion } from 'framer-motion'
+import React, { useEffect, useMemo, useState } from 'react'
 
-import { TransitionDirection, fadeIn } from '../../utils/motion'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { ISteamGame, steamGameState } from '../../state/steam.state'
-import { LiveBlinker } from './SteamTracker.styles'
-import { getLatestSteamGame } from '../../service/steam.service'
+import { initialSteamGameState } from '../../features/steam/steam.state'
+import type { ISteamGame } from '../../features/steam/steam.state'
+import { getLatestSteamGame } from '../../features/steam/steam.service'
+import { copy } from '../../lib/copy'
 
-interface SteamTrackerProps {}
+type TrackerSegment =
+  | {
+      id: string
+      kind: 'image'
+      bannerUrl: string
+      alt: string
+    }
+  | {
+      id: string
+      kind: 'text'
+      label: string
+    }
 
-const SteamTracker: React.FC<SteamTrackerProps> = ({}) => {
+const buildBannerItems = (steamGame: ISteamGame): TrackerSegment[] => {
   const {
     name,
     playtime2Weeks,
@@ -18,54 +26,92 @@ const SteamTracker: React.FC<SteamTrackerProps> = ({}) => {
     bannerUrl,
     achievementCount,
     achievementTotal
-  } = useRecoilValue<ISteamGame>(steamGameState)
-  const setSteamGame = useSetRecoilState(steamGameState)
+  } = steamGame
+
+  return [
+    {
+      id: 'image',
+      kind: 'image',
+      bannerUrl,
+      alt: name
+    },
+    {
+      id: 'now-playing',
+      kind: 'text',
+      label: `${copy.steam.nowPlaying}: ${name}`
+    },
+    {
+      id: 'playtime-2w',
+      kind: 'text',
+      label: `${copy.steam.playtime2w}: ${Math.round(playtime2Weeks / 60)}h`
+    },
+    {
+      id: 'playtime-all',
+      kind: 'text',
+      label: `${copy.steam.playtimeAll}: ${Math.round(playtimeAllTime / 60)}h`
+    },
+    {
+      id: 'achievements',
+      kind: 'text',
+      label: `${copy.steam.achievements}: ${achievementCount}/${achievementTotal}`
+    }
+  ]
+}
+
+const SteamTracker: React.FC = () => {
+  const [steamGame, setSteamGame] = useState<ISteamGame>(initialSteamGameState)
 
   useEffect(() => {
     const getGameAndUpdate = async () => {
       const game = await getLatestSteamGame()
-      if (game) setSteamGame(game)
+      if (game) {
+        setSteamGame(game)
+      }
     }
+
     getGameAndUpdate()
   }, [])
 
+  const items = useMemo(() => buildBannerItems(steamGame), [steamGame])
+  const repeatedItems = useMemo(
+    () => Array.from({ length: 5 }, () => items).flat(),
+    [items]
+  )
+
   return (
-    <ReactParallaxTilt className="sm:w-[350px] w-full">
-      <motion.div
-        variants={fadeIn(TransitionDirection.RIGHT, 'spring', 1 * 0.5, 0.75)}
-        className="w-full bg-gradient-to-b from-secondary to-orange-300 p-[1px] rounded-[10px] shadow-card"
-      >
-        <div className="bg-tertiary rounded-[10px] py-6 px-6 min-h-[280px] flex justify-evenly items-center flex-col">
-          <div className="w-full flex justify-between flex-row items-center ">
-            <h3 className="text-white text-[18px] text-center">Playing now</h3>
-            <LiveBlinker />
-          </div>
-          <img
-            src={bannerUrl}
-            alt={name}
-            className="sm:w-full w-[350px] object-contain"
-          />
-          <div className="w-full flex justify-between flex-row items-center">
-            <p className="flex text-[12px]">Playtime (2 weeks)</p>
-            <p className="flex text-[12px]">
-              {Math.round(playtime2Weeks / 60)} hrs
-            </p>
-          </div>
-          <div className="w-full flex justify-between flex-row items-center">
-            <p className="flex text-[12px]">Playtime (All time)</p>
-            <p className="flex text-[12px]">
-              {Math.round(playtimeAllTime / 60)} hrs
-            </p>
-          </div>
-          <div className="w-full flex justify-between flex-row items-center">
-            <p className="flex text-[12px]">Achievements</p>
-            <p className="flex text-[12px]">
-              {achievementCount} / {achievementTotal}
-            </p>
-          </div>
+    <section className="w-full bg-[linear-gradient(90deg,#1a1917,#26231f,#1a1917)] py-2">
+      <div className="w-full overflow-hidden">
+        <div
+          className="flex w-max min-w-[200%]"
+          style={{ animation: 'marquee-scroll 32s linear infinite' }}
+        >
+          {repeatedItems.map((item, index) => (
+            <article
+              key={`${item.id}-${index}`}
+              className="mr-3 inline-flex items-center gap-[10px] whitespace-nowrap bg-black/52 px-3 py-2 text-[#f0ece4]"
+            >
+              {item.kind === 'image' ? (
+                <img
+                  src={item.bannerUrl}
+                  alt={item.alt}
+                  className="h-[34px] w-auto object-cover"
+                />
+              ) : (
+                <>
+                  <span
+                    className="inline-flex h-2 w-2 rounded-full bg-white"
+                    style={{ animation: 'live-pulse 0.9s infinite alternate' }}
+                  />
+                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#f0ece4]">
+                    {item.label}
+                  </p>
+                </>
+              )}
+            </article>
+          ))}
         </div>
-      </motion.div>
-    </ReactParallaxTilt>
+      </div>
+    </section>
   )
 }
 

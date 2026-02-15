@@ -1,4 +1,8 @@
-export const textVariant = (delay?: number) => {
+import type { Easing, Transition, Variants } from 'framer-motion'
+
+type TransitionType = Transition['type'] | ''
+
+export const textVariant = (delay?: number): Variants => {
   return {
     hidden: {
       y: -50,
@@ -26,10 +30,20 @@ export enum TransitionDirection {
 
 export const fadeIn = (
   direction: TransitionDirection,
-  type: any,
+  type: TransitionType,
   delay: number,
   duration: number
-) => {
+): Variants => {
+  const transition: Transition = {
+    delay,
+    duration,
+    ease: 'easeOut' as Easing
+  }
+
+  if (type) {
+    transition.type = type
+  }
+
   return {
     hidden: {
       x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
@@ -40,17 +54,12 @@ export const fadeIn = (
       x: 0,
       y: 0,
       opacity: 1,
-      transition: {
-        type: type,
-        delay: delay,
-        duration: duration,
-        ease: 'easeOut'
-      }
+      transition
     }
   }
 }
 
-export const zoomIn = (delay: number, duration: number) => {
+export const zoomIn = (delay: number, duration: number): Variants => {
   return {
     hidden: {
       scale: 0,
@@ -61,9 +70,9 @@ export const zoomIn = (delay: number, duration: number) => {
       opacity: 1,
       transition: {
         type: 'tween',
-        delay: delay,
-        duration: duration,
-        ease: 'easeOut'
+        delay,
+        duration,
+        ease: 'easeOut' as Easing
       }
     }
   }
@@ -71,10 +80,20 @@ export const zoomIn = (delay: number, duration: number) => {
 
 export const slideIn = (
   direction: TransitionDirection,
-  type: any,
+  type: TransitionType,
   delay: number,
   duration: number
-) => {
+): Variants => {
+  const transition: Transition = {
+    delay,
+    duration,
+    ease: 'easeOut' as Easing
+  }
+
+  if (type) {
+    transition.type = type
+  }
+
   return {
     hidden: {
       x: direction === 'left' ? '-100%' : direction === 'right' ? '100%' : 0,
@@ -83,26 +102,21 @@ export const slideIn = (
     show: {
       x: 0,
       y: 0,
-      transition: {
-        type: type,
-        delay: delay,
-        duration: duration,
-        ease: 'easeOut'
-      }
+      transition
     }
   }
 }
 
 export const staggerContainer = (
-  staggerChildren?: any,
-  delayChildren?: any
-) => {
+  staggerChildren?: number,
+  delayChildren = 0
+): Variants => {
   return {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: staggerChildren,
-        delayChildren: delayChildren || 0
+        staggerChildren,
+        delayChildren
       }
     }
   }

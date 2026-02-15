@@ -1,5 +1,3 @@
-import { atom } from 'recoil'
-
 export interface ISteamGame {
   appId: number
   name: string
@@ -11,7 +9,7 @@ export interface ISteamGame {
   achievementTotal: number
 }
 
-const initialState: ISteamGame = {
+export const initialSteamGameState: ISteamGame = {
   appId: 252950,
   name: 'Rocket League',
   playtime2Weeks: 0,
@@ -21,8 +19,3 @@ const initialState: ISteamGame = {
   achievementCount: 67,
   achievementTotal: 88
 }
-
-export const steamGameState = atom({
-  key: 'steamGame',
-  default: initialState
-})

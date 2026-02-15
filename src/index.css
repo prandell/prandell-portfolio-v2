@@ -1,137 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;700;800&display=swap');
+@import 'tailwindcss';
 
-@import 'tailwindcss/base';
-
-@import 'tailwindcss/components';
-
-@import 'tailwindcss/utilities';
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
-  scroll-behavior: smooth;
-  color-scheme: dark;
+@theme {
+  --color-primary: #0b0b0b;
+  --color-secondary: #d6d1c8;
+  --color-tertiary: #161616;
+  --color-black-100: #111111;
+  --color-black-200: #070707;
+  --color-white-100: #bcb6ab;
+  --shadow-card: 10px 10px 0px #050505;
+  --breakpoint-xs: 450px;
 }
 
-.hash-span {
-  margin-top: -100px;
-  padding-bottom: 100px;
-  display: block;
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --page-gutter: clamp(6px, 2.4vw, 34px);
+  --nav-height: 88px;
 }
 
-.black-gradient {
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: #f2efe9;
+    line-height: 1.5;
+    color-scheme: dark;
+    background-color: #0a0a0a;
+    background-image:
+      radial-gradient(circle at 12% -5%, rgba(246, 235, 214, 0.07), transparent 30%),
+      radial-gradient(circle at 86% 8%, rgba(207, 195, 176, 0.06), transparent 28%),
+      radial-gradient(circle at 20% 100%, rgba(239, 231, 218, 0.04), transparent 32%),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 72px),
+      linear-gradient(180deg, #090909 0%, #121110 42%, #0b0b0b 100%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
-.violet-gradient {
-  background: #804dee;
-  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(
-    -90deg,
-    #804dee 0%,
-    rgba(60, 51, 80, 0) 100%
-  );
+/* Third-party: hero canvas (InteractiveParticles) */
+.hero-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.green-pink-gradient {
-  background: '#00cea8';
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+.hero-container > canvas {
+  width: 100% !important;
+  height: 100% !important;
+  filter: grayscale(1) contrast(1.2);
+  opacity: 0.72;
 }
 
-.orange-text-gradient {
-  background: #f12711; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Third-party: yarl lightbox */
+.yarl__container {
+  background-color: rgba(8, 8, 8, 0.94) !important;
 }
 
-.green-text-gradient {
-  background: #11998e; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.yarl__button {
+  filter: grayscale(1);
 }
 
-.blue-text-gradient {
-  /* background: -webkit-linear-gradient(#eee, #333); */
-  background: #56ccf2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.pink-text-gradient {
-  background: #ec008c; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* canvas- styles */
-/* .canvas-loader {
-  font-size: 10px;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  animation: mulShdSpin 1.1s infinite ease;
-  transform: translateZ(0);
-} */
-
+/* Canvas loader animation */
 .canvas-loader {
   height: 9px;
   width: 60px;
-  --c: no-repeat linear-gradient(#a5b3fc 0 0);
+  --c: no-repeat linear-gradient(#f2f2f2 0 0);
   background: var(--c), var(--c), var(--c), var(--c);
   background-size: 26% 3px;
   animation: l2 1s infinite;
@@ -159,5 +124,110 @@
   56% {
     background-position: calc(0 * 100% / 3) 100%, calc(1 * 100% / 3) 100%,
       calc(2 * 100% / 3) 100%, calc(3 * 100% / 3) 0;
+  }
+}
+
+/* Typing dots animation (ChatMessage) */
+.typing-dots {
+  width: 30px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, #040404 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: typing-dots 1s infinite linear;
+}
+
+@keyframes typing-dots {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+/* SteamTracker marquee */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes live-pulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* BubbleText — DOM-manipulated hover classes */
+.bubble-char {
+  font-family: var(--font-display);
+  transition: 0.35s font-weight, 0.35s color;
+}
+
+.hover-active {
+  font-weight: 900;
+  color: rgb(245, 245, 245);
+}
+
+.hover-adj {
+  font-weight: 500;
+  color: rgb(210, 210, 210);
+}
+
+.hover-adj-adj {
+  font-weight: 300;
+}
+
+/* TechCloud — child selector styling for third-party canvas */
+.tech-cloud {
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  filter: grayscale(1) contrast(1.1) brightness(1.08);
+}
+
+.tech-cloud > * {
+  margin: auto;
+  width: 84%;
+}
+
+.tech-cloud canvas {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(
+    circle at 20% 20%,
+    rgba(255, 255, 255, 0.08),
+    transparent 50%
+  );
+}
+
+@media (max-width: 800px) {
+  .tech-cloud {
+    width: unset;
+  }
+
+  .tech-cloud > * {
+    width: 94%;
+  }
+}
+
+@media (max-width: 400px) {
+  .tech-cloud > * {
+    width: 100%;
   }
 }

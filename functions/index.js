@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const functions = require('firebase-functions/v1')
 require('firebase-functions/logger/compat')
 const cors = require('cors')({ origin: true })
