@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
-import SectionWrapper from './SectionWrapper/SectionWrapper'
 
-import { styles } from '../config/styles'
-import { TransitionDirection, slideIn } from '../lib/motion'
+import SectionWrapper from './SectionWrapper/SectionWrapper'
+import { styles, panels, inputs } from '../config/styles'
 import { GithubIconLink, LinkedInIconLink } from './Icons'
-import ChatWindow from './ChatWindow/ChatWindow'
+import { copy } from '../lib/copy'
+import { BrutalButton } from './ui'
 
 interface ContactFormState {
   name: string
@@ -51,7 +50,7 @@ const Contact = () => {
           import.meta.env.VITE_APP_EMAILJS_TEMPLATE_KEY,
           {
             from_name: form.name,
-            to_name: 'Patrick Randell',
+            to_name: copy.nav.name,
             from_email: form.email,
             to_email: 'patch.800@hotmail.com',
             message: form.message
@@ -61,7 +60,7 @@ const Contact = () => {
         .then(
           () => {
             setLoading(false)
-            alert('Thank you. I will get back to you as soon as possible.')
+            alert(copy.contact.successMessage)
 
             setForm({
               name: '',
@@ -73,97 +72,87 @@ const Contact = () => {
             setLoading(false)
             console.error(error)
 
-            alert('Ahh, something went wrong. Please try again.')
+            alert(copy.contact.errorMessage)
           }
         )
     }
   }
 
   return (
-    <div
-      className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}
-    >
-      <motion.div
-        variants={slideIn(TransitionDirection.LEFT, 'tween', 0.2, 1)}
-        className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
-      >
-        <p className={styles.sectionSubText}>Get in touch</p>
-        <h3 className={styles.sectionHeadText}>Contact</h3>
+    <>
+      <div>
+        <p className={styles.sectionSubText}>{copy.contact.subheading}</p>
+        <h2 className={styles.sectionHeadText}>{copy.contact.heading}</h2>
+      </div>
 
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="mt-6 flex flex-col gap-6"
-        >
+      <div className={`${panels.cta} mt-4 px-4 py-4 sm:px-6 sm:py-5`}>
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-8">
           <label className="flex flex-col">
-            <span className="text-white mb-4">Your Name</span>
+            <span className="font-mono mb-3 text-[11px] uppercase tracking-[0.18em] text-[#5c5851]">
+              {copy.contact.nameLabel}
+            </span>
             <input
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="Obi-wan Kenobi"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary placeholder:text-opacity-50 text-white rounded-lg outline-none border-none "
+              placeholder={copy.contact.namePlaceholder}
+              className={`${inputs.cta} px-5 py-4`}
             />
           </label>
           <label className="flex flex-col">
-            <span className="text-white mb-4">Your email</span>
+            <span className="font-mono mb-3 text-[11px] uppercase tracking-[0.18em] text-[#5c5851]">
+              {copy.contact.emailLabel}
+            </span>
             <input
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="obi-wan-kenobi@jedi-council.com"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary placeholder:text-opacity-50 text-white rounded-lg outline-none border-none"
+              placeholder={copy.contact.emailPlaceholder}
+              className={`${inputs.cta} px-5 py-4`}
             />
           </label>
           <label className="flex flex-col">
-            <span className="text-white mb-4">Your Message</span>
+            <span className="font-mono mb-3 text-[11px] uppercase tracking-[0.18em] text-[#5c5851]">
+              {copy.contact.messageLabel}
+            </span>
             <textarea
               rows={6}
               name="message"
               value={form.message}
               onChange={handleChange}
-              placeholder="Hello there!"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary placeholder:text-opacity-50 text-white rounded-lg outline-none border-none"
+              placeholder={copy.contact.messagePlaceholder}
+              className={`${inputs.cta} px-5 py-4`}
             />
           </label>
 
-          <div className="flex flex-row justify-between">
-            <button
-              type="submit"
-              className="bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white shadow-md shadow-primary"
-            >
-              {loading ? 'Sending...' : 'Send'}
-            </button>
-            <div className="flex items-center gap-1">
+          <div className="flex flex-row items-center justify-between gap-4">
+            <BrutalButton as="button" type="submit" className="px-4 py-2 text-[11px] leading-none">
+              {loading ? copy.contact.sendingButton : copy.contact.sendButton}
+            </BrutalButton>
+            <div className="flex items-center gap-2">
               <a
-                className="flex justify-center h-[40px] w-[40px]"
+                className="flex h-[40px] w-[40px] items-center justify-center bg-[#111]"
                 target="_blank"
-                href="https://www.linkedin.com/in/randellp/"
+                rel="noreferrer"
+                href={copy.contact.linkedInUrl}
               >
-                <LinkedInIconLink size={30} />
+                <LinkedInIconLink size={24} />
               </a>
               <a
-                className="flex justify-center h-[40px] w-[40px]"
+                className="flex h-[40px] w-[40px] items-center justify-center bg-[#111]"
                 target="_blank"
-                href="https://github.com/prandell"
+                rel="noreferrer"
+                href={copy.contact.githubUrl}
               >
-                <GithubIconLink size={30} />
+                <GithubIconLink size={22} />
               </a>
             </div>
           </div>
         </form>
-      </motion.div>
-
-      {/* <motion.div
-        variants={slideIn(TransitionDirection.RIGHT, 'tween', 0.2, 1)}
-        className="xl:flex-1 xl:h-auto md:h-[500px] h-[350px]"
-      >
-        <EarthCanvas />
-      </motion.div> */}
-      <ChatWindow />
-    </div>
+      </div>
+    </>
   )
 }
 

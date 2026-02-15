@@ -1,18 +1,16 @@
 import React from 'react'
 import ReactParallaxTilt from 'react-parallax-tilt'
-import { motion } from 'framer-motion'
 
 import { github, live } from '../../assets'
-import { TransitionDirection, fadeIn } from '../../lib/motion'
 import type { Project } from '../../config'
 import PhotoLightbox from '../PhotoLightbox/PhotoLightbox'
+import { panels } from '../../config/styles'
 
 interface ProjectCardProps extends Project {
   index: number
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
-  index,
   name,
   description,
   tags,
@@ -22,63 +20,68 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   liveDemoLink
 }) => {
   return (
-    <motion.div
-      variants={fadeIn(TransitionDirection.UP, 'spring', index * 0.5, 0.75)}
+    <ReactParallaxTilt
+      tiltMaxAngleX={7}
+      tiltMaxAngleY={7}
+      scale={1}
+      transitionSpeed={320}
+      className={`${panels.ink} p-4 sm:w-[360px] w-full`}
     >
-      <ReactParallaxTilt
-        tiltMaxAngleX={15}
-        tiltMaxAngleY={15}
-        scale={1}
-        transitionSpeed={350}
-        className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full"
-      >
-        <div className="relative w-full h-[230px] overflow-hidden">
-          {photos ? (
-            <PhotoLightbox />
-          ) : (
-            <>
-              <img
-                src={image}
-                alt="project_image"
-                className="w-full h-full object-cover rounded-lg"
-              />
+      <div className="relative h-[220px] w-full overflow-hidden bg-black/30">
+        {photos ? (
+          <PhotoLightbox />
+        ) : (
+          <>
+            <img
+              src={image}
+              alt="project_image"
+              className="h-full w-full object-cover"
+            />
 
-              <div className="absolute inset-0 flex justify-between m-3 card-img_hover">
+            <div className="absolute inset-0 m-3 flex justify-between card-img_hover">
+              {liveDemoLink && (
                 <div
                   onClick={() => window.open(liveDemoLink, '_blank')}
-                  className="bg-gradient-to-r from-secondary to-white w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center bg-[#f2ede3]"
                 >
                   <img
                     src={live}
-                    alt="source code"
-                    className="w-1/2 h-1/2 object-contain"
+                    alt="live demo"
+                    className="h-1/2 w-1/2 object-contain"
                   />
                 </div>
+              )}
+              {sourceCodeLink && (
                 <div
                   onClick={() => window.open(sourceCodeLink, '_blank')}
-                  className="bg-gradient-to-r from-tertiary to-secondary w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center bg-[#0f0f0f]"
                 >
                   <img
                     src={github}
                     alt="source code"
-                    className="w-1/2 h-1/2 object-contain"
+                    className="h-1/2 w-1/2 object-contain"
                   />
                 </div>
-              </div>
-            </>
-          )}
-        </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
 
-        <div className="mt-5">
-          <h3 className="text-white font-bold text-[24px]">{name}</h3>
-          <p className="mt-2 text-secondary text-[14px]">{description}</p>
-        </div>
+      <div className="mt-4">
+        <h3 className="font-display text-[24px] uppercase tracking-[0.05em] text-white">
+          {name}
+        </h3>
+        <p className="mt-2 text-[14px] leading-[1.6] text-[#ddd8cf]">
+          {description}
+        </p>
+      </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => tag.icon)}
-        </div>
-      </ReactParallaxTilt>
-    </motion.div>
+      <div className="mt-4 flex flex-wrap gap-2 opacity-80 grayscale">
+        {tags.map((tag) => tag.icon)}
+      </div>
+    </ReactParallaxTilt>
   )
 }
+
 export default ProjectCard

@@ -5,7 +5,7 @@ import { IconDictionary } from '../components/Icons'
 export interface Experience {
   title: string
   company_name: string
-  icon: string
+  icon: string | string[]
   iconBg: string
   date: string
   points: string[]
@@ -15,7 +15,7 @@ const experiences: Experience[] = [
   {
     title: 'Lead Engineer',
     company_name: 'LabEleven | Large Australian crypto company',
-    icon: '/favicon.ico',
+    icon: '/labeleven.webp',
     iconBg: 'black',
     date: 'April 2024 - Present',
     points: [
@@ -26,6 +26,16 @@ const experiences: Experience[] = [
       'Built incentive campaign infrastructure (loot boxes and raffles) using persisted randomness, idempotent durable execution, and ledger-backed reward accounting.',
       'Drove technical direction, incident ownership, mentoring, and cross-team coordination across product, engineering, and operations.',
       'During this phase, the platform scaled from ~100 users to ~500k users and reached a valuation above $150M.'
+    ]
+  },
+  {
+    title: 'Working Ski Holiday',
+    company_name: 'Whistler, BC, Canada',
+    icon: '/favicon.ico',
+    iconBg: 'black',
+    date: 'October 2023 - April 2024',
+    points: [
+      'Took a season off to live and work in Whistler — worked in a ski hire store, made great tips, and spent 70 days on the mountain.',
     ]
   },
   {
@@ -43,7 +53,10 @@ const experiences: Experience[] = [
   {
     title: 'Software Engineering Internships',
     company_name: 'ANZ + Deloitte',
-    icon: 'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/anz-logo.png',
+    icon: [
+      'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/anz-logo.png',
+      'https://storage.googleapis.com/prandell-portfolio.appspot.com/company-logos/deloitte-logo.webp'
+    ],
     iconBg: 'black',
     date: 'November 2019 - February 2020',
     points: [

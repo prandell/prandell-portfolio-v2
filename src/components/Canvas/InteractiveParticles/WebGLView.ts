@@ -13,13 +13,14 @@ export default class WebGLView {
   interactive: InteractiveControls | undefined = undefined
   particles: any
   currSample: null | number = null
+  transitioning = false
   fovHeight: number | undefined = undefined
   constructor(app: any) {
     this.app = app
 
     this.samples = [
-      'images/snowboarder.jpg',
       'images/cockatoo.png',
+      'images/snowboarder.jpg',
       'images/car.jpg'
     ]
 
@@ -43,6 +44,7 @@ export default class WebGLView {
       10000
     )
     this.camera.position.z = 300
+    this.camera.position.x = -40
     this.camera.position.y = 5
 
     // renderer
@@ -79,19 +81,24 @@ export default class WebGLView {
   }
 
   goto(index: number) {
-    // init next
-    if (this.currSample === null) this.particles.init(this.samples[index])
-    // hide curr then init next
-    else {
+    if (this.transitioning) return
+    this.transitioning = true
+
+    if (this.currSample === null) {
+      this.particles.init(this.samples[index])
+      this.currSample = index
+      this.transitioning = false
+    } else {
       this.particles.hide(true).then(() => {
         this.particles.init(this.samples[index])
+        this.currSample = index
+        this.transitioning = false
       })
     }
-
-    this.currSample = index
   }
 
   next() {
+    if (this.transitioning) return
     if (this.currSample !== null && this.currSample < this.samples.length - 1)
       this.goto(this.currSample + 1)
     else this.goto(0)
@@ -103,6 +110,11 @@ export default class WebGLView {
 
   resize() {
     if (!this.renderer) return
+
+    const isMobile = window.innerWidth < 640
+    this.camera.position.x = isMobile ? 0 : -40
+    this.camera.position.y = isMobile ? 40 : 5
+
     this.camera.aspect = window.innerWidth / window.innerHeight
     this.camera.updateProjectionMatrix()
 

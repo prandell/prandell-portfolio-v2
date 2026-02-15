@@ -1,32 +1,13 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import 'react-vertical-timeline-component/style.min.css'
 
-import {
-  About,
-  Experience,
-  Contact,
-  Hero,
-  Tech,
-  Navbar,
-  Works
-} from './components'
+import { HomePage } from './pages'
 
 const App: React.FC = () => {
   return (
     <BrowserRouter basename="/">
-      <div className="relative z-0 bg-primary">
-        <div className="bg-primary bg-cover bg-no-repeat bg-center">
-          <Navbar />
-          <Hero />
-        </div>
-        <About />
-        <Experience />
-        <Tech />
-        <Works />
-        <div className="relative z-0">
-          <Contact />
-        </div>
+      <div className="relative z-0 bg-primary pb-20 px-[var(--page-gutter)]">
+        <HomePage />
       </div>
     </BrowserRouter>
   )

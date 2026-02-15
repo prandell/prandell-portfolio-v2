@@ -1,7 +1,6 @@
 import React from 'react'
 import { Cloud, renderSimpleIcon } from 'react-icon-cloud'
 import type { IOptions } from 'react-icon-cloud'
-import { StyledTechCloud } from './TechCloud.styles'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 // Ugly icon imports for icon cloud
@@ -108,7 +107,7 @@ const TechCloud: React.FC = () => {
   const imageScale = isSkinny ? 1 : isMobile ? 0.7 : 0.8
 
   return (
-    <StyledTechCloud>
+    <div className="tech-cloud">
       <Cloud
         options={{
           ...tagCanvasOptions,
@@ -117,7 +116,7 @@ const TechCloud: React.FC = () => {
       >
         {icons}
       </Cloud>
-    </StyledTechCloud>
+    </div>
   )
 }
 

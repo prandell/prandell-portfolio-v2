@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import browser from 'browser-detect'
 
 import TouchTexture from './TouchTexture'
 import { TweenLite } from 'gsap'
@@ -7,6 +8,7 @@ import vert from '../../../assets/shaders/particle.vert'
 import frag from '../../../assets/shaders/particle.frag'
 
 export default class Particles {
+  isMobile: boolean
   webgl: any
   container: THREE.Object3D<THREE.Object3DEventMap>
   texture: THREE.Texture | undefined = undefined
@@ -28,6 +30,7 @@ export default class Particles {
   constructor(webgl: any) {
     this.webgl = webgl
     this.container = new THREE.Object3D()
+    this.isMobile = !!browser().mobile
   }
 
   init(src: any) {
@@ -212,6 +215,32 @@ export default class Particles {
     if (this.touch) this.touch.update()
 
     this.object3D.material.uniforms.uTime.value += delta
+
+    if (this.isMobile && this.touch) {
+      this.autoRipple()
+    }
+  }
+
+  autoRipple() {
+    const t = this.object3D!.material.uniforms.uTime.value
+
+    // Two wandering points tracing different lissajous-like paths
+    const paths = [
+      {
+        x: 0.5 + 0.38 * Math.sin(t * 0.17) * Math.cos(t * 0.11),
+        y: 0.5 + 0.35 * Math.cos(t * 0.13) * Math.sin(t * 0.19)
+      },
+      {
+        x: 0.5 + 0.4 * Math.sin(t * 0.23 + 2.0) * Math.cos(t * 0.07 + 1.0),
+        y: 0.5 + 0.32 * Math.cos(t * 0.09 + 3.0) * Math.sin(t * 0.15 + 0.5)
+      }
+    ]
+
+    for (const p of paths) {
+      const cx = Math.max(0, Math.min(1, p.x))
+      const cy = Math.max(0, Math.min(1, p.y))
+      this.touch.addTouch({ x: cx, y: cy }, 0.75)
+    }
   }
 
   show(time = 1.0) {
@@ -283,7 +312,8 @@ export default class Particles {
   resize() {
     if (!this.object3D) return
 
-    const scale = (this.webgl.fovHeight * 0.9) / this.height
+    const factor = window.innerWidth < 640 ? 0.65 : 0.9
+    const scale = (this.webgl.fovHeight * factor) / this.height
     this.object3D.scale.set(scale, scale, 1)
     if (this.hitArea) this.hitArea.scale.set(scale, scale, 1)
   }

@@ -1,37 +1,26 @@
 import React from 'react'
-import { motion } from 'framer-motion'
 
-import { styles } from '../config/styles'
-import { aboutMe } from '../config'
-import { TransitionDirection, fadeIn, textVariant } from '../lib/motion'
+import { styles, panels } from '../config/styles'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
-import SteamTracker from './SteamTracker/SteamTracker'
+import { copy } from '../lib/copy'
 
 const About = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Introduction</p>
-        <h2 className={styles.sectionHeadText}>Overview</h2>
-      </motion.div>
+      <div>
+        <p className={styles.sectionSubText}>{copy.about.subheading}</p>
+        <h2 className={styles.sectionHeadText}>{copy.about.heading}</h2>
+      </div>
 
-      <div className="mt-4 flex flex-col sm:flex-row items-center gap-10">
-        <motion.div
-          variants={fadeIn(TransitionDirection.LEFT, '', 0.1, 1)}
-          className="flex flex-col text-secondary text-[17px] max-w-l leading-[30px]"
-        >
-          {aboutMe.blurb}
-          <a
-            className="text-[7px] w-fit"
-            target="_blank"
-            href="https://rocketleague.tracker.network/rocket-league/profile/steam/76561199068492201/overview"
+      <div className={`${panels.ink} mt-8 max-w-3xl p-6 sm:p-8`}>
+        {copy.about.blurb.map((paragraph, i) => (
+          <p
+            key={i}
+            className={`text-[16px] leading-[1.9] text-[#ddd8cf] sm:text-[18px]${i > 0 ? ' mt-5' : ''}`}
           >
-            Also, check my Rocket League stats
-          </a>
-        </motion.div>
-        <motion.div variants={fadeIn(TransitionDirection.RIGHT, '', 0.1, 1)}>
-          <SteamTracker />
-        </motion.div>
+            {paragraph}
+          </p>
+        ))}
       </div>
     </>
   )

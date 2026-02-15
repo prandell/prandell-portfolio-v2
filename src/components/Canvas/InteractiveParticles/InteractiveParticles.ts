@@ -4,6 +4,7 @@ export default class InteractiveParticles {
   webgl: WebGLView | undefined = undefined
   handlerAnimate: any
   raf: number | undefined = undefined
+  autoCycleTimer: ReturnType<typeof setInterval> | undefined = undefined
   constructor() {}
 
   init() {
@@ -11,6 +12,10 @@ export default class InteractiveParticles {
     this.addListeners()
     this.animate()
     this.resize()
+
+    this.autoCycleTimer = setInterval(() => {
+      this.webgl?.next()
+    }, 8000)
   }
 
   initWebGL() {
