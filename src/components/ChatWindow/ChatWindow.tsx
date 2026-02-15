@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-import { styles } from '../../styles'
-import { TransitionDirection, fadeIn, slideIn } from '../../utils/motion'
-import ChatMessage, { IChatMessage } from './ChatMessage'
-import { askPatbot } from '../../service/ai.service'
+import { styles } from '../../config/styles'
+import { TransitionDirection, fadeIn, slideIn } from '../../lib/motion'
+import ChatMessage from './ChatMessage'
+import type { IChatMessage } from './ChatMessage'
+import { askPatbot, type AskPatbotResponse } from '../../features/chat/ai.service'
 
 const placeholders = [
   'What front-end frameworks has Pat used?',
@@ -22,7 +23,7 @@ const defaultMessage: IChatMessage = {
 }
 
 const ChatWindow: React.FC = () => {
-  const formRef = useRef<any>()
+  const formRef = useRef<HTMLFormElement | null>(null)
   const [question, setQuestion] = useState('')
 
   const [chatMessages, setChatMessages] = useState<IChatMessage[]>([
@@ -35,7 +36,7 @@ const ChatWindow: React.FC = () => {
 
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(e.target.value)
   }
 
@@ -54,7 +55,7 @@ const ChatWindow: React.FC = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    (e: any) => {
+    (e: { preventDefault: () => void }) => {
       e.preventDefault()
       setQuestion('')
       setLoading(true)
@@ -65,10 +66,10 @@ const ChatWindow: React.FC = () => {
           { message: '', isPb: true, loading: true }
         ]
       })
-      askPatbot(question).then((m: any) => {
+      askPatbot(question).then((m?: AskPatbotResponse) => {
         setChatMessages((cm) => [
           ...cm.slice(0, 2),
-          { message: m.data, isPb: true }
+          { message: m?.data ?? 'Sorry, I could not retrieve a response.', isPb: true }
         ])
         setLoading(false)
       })

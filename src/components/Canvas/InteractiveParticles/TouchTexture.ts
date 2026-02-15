@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { easeOutSine } from '../../../utils/easing'
+import { easeOutSine } from '../../../lib/easing'
 
 export default class TouchTexture {
   size: number

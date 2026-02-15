@@ -62,13 +62,13 @@ export default class Particles {
       numVisible = 0
       threshold = 34
 
-      const img = this.texture?.image
+      const img = this.texture?.image as CanvasImageSource | undefined
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
 
       canvas.width = this.width
       canvas.height = this.height
-      if (ctx !== null) {
+      if (ctx !== null && img) {
         ctx.scale(1, -1)
         ctx.drawImage(img, 0, 0, this.width, this.height * -1)
 

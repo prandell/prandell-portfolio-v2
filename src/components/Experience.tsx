@@ -3,9 +3,9 @@ import { VerticalTimeline } from 'react-vertical-timeline-component'
 import { motion } from 'framer-motion'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 
-import { styles } from '../styles'
-import { experiences } from '../constants'
-import { textVariant } from '../utils/motion'
+import { styles } from '../config/styles'
+import { experiences } from '../config'
+import { textVariant } from '../lib/motion'
 import ExperienceCard from './ExperienceCard/ExperienceCard'
 
 const Experience: React.FC = () => {

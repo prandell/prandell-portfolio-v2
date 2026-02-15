@@ -1,5 +1,7 @@
-import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
+import { initializeApp } from 'firebase/app'
+import type { FirebaseApp, FirebaseOptions } from 'firebase/app'
 import { getFunctions, httpsCallable } from 'firebase/functions'
+import type { SteamApiResponse } from '../features/steam/steam-response.model'
 
 //Prandell portfolio Web App Configuration
 const firebaseConfig: FirebaseOptions = {
@@ -14,5 +16,11 @@ const firebaseConfig: FirebaseOptions = {
 // Initialize Firebase Application and Functions
 const firebaseApp: FirebaseApp = initializeApp(firebaseConfig)
 const functions = getFunctions(firebaseApp)
-export const getRecentGames = httpsCallable(functions, 'getRecentGames')
-export const askPatQuestion = httpsCallable(functions, 'askPatQuestion')
+export const getRecentGames = httpsCallable<void, SteamApiResponse>(
+  functions,
+  'getRecentGames'
+)
+export const askPatQuestion = httpsCallable<{ text: string }, { data: string }>(
+  functions,
+  'askPatQuestion'
+)

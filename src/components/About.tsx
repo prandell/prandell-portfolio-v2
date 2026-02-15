@@ -1,9 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-import { styles } from '../styles'
-import { aboutMe } from '../constants'
-import { TransitionDirection, fadeIn, textVariant } from '../utils/motion'
+import { styles } from '../config/styles'
+import { aboutMe } from '../config'
+import { TransitionDirection, fadeIn, textVariant } from '../lib/motion'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 import SteamTracker from './SteamTracker/SteamTracker'
 

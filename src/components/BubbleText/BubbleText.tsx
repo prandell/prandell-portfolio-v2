@@ -1,4 +1,5 @@
-import React, { MouseEvent, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import type { MouseEvent } from 'react'
 import { BubbleTextLetter } from './BubbleText.styles'
 
 interface BubbleTextProps
@@ -12,11 +13,11 @@ interface BubbleTextProps
 }
 
 const prevIndexFinder = (idx: number | null) => {
-  return idx == 0 || idx == null ? null : idx - 1
+  return idx === 0 || idx === null ? null : idx - 1
 }
 
 const nextIndexFinder = (idx: number | null, wordLength: number) => {
-  return idx == null || idx == wordLength - 1 ? null : idx + 1
+  return idx === null || idx === wordLength - 1 ? null : idx + 1
 }
 
 const getElByIdx = (idx: number | null, id: string) => {
@@ -57,15 +58,19 @@ const BubbleText: React.FC<BubbleTextProps> = ({
   off,
   ...props
 }) => {
-  const bubbleChars = useRef<HTMLHeadingElement | any>()
+  const bubbleChars = useRef<HTMLHeadingElement | null>(null)
 
   const removeClasses = () => {
     const children = bubbleChars.current?.children ?? []
 
-    Array.from(children).forEach((c: any) => {
-      c.classList.remove(`hover-text-${id}`)
-      c.classList.remove(`hover-text-adj-${id}`)
-      c.classList.remove(`hover-text-adj-adj-${id}`)
+    Array.from(children).forEach((child) => {
+      if (!(child instanceof HTMLElement)) {
+        return
+      }
+
+      child.classList.remove(`hover-text-${id}`)
+      child.classList.remove(`hover-text-adj-${id}`)
+      child.classList.remove(`hover-text-adj-adj-${id}`)
     })
   }
 

@@ -1,4 +1,4 @@
-import { IconProperties } from '../../models/icon.models'
+import type { IconProperties } from '../../types/icon.models'
 
 const CloseIcon: React.FC<IconProperties> = ({ fill, ...props }) => {
   return (

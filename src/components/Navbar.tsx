@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { styles } from '../styles'
-import { navLinks } from '../constants'
+import { styles } from '../config/styles'
+import { navLinks } from '../config'
 import { MenuIcon, CloseIcon } from '../assets'
-import { colours } from '../constants'
+import { colours } from '../config'
 import BubbleText from './BubbleText/BubbleText'
 import FuzzyBackground from './FuzzyBackground/FuzzyBackground'
 

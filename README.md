@@ -1,163 +1,238 @@
-# Personal Portfolio V2
+# Patrick Randell Portfolio (v2)
 
-<a name="readme-top"></a>
+This repository contains Patrick Randell's personal portfolio website.
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <img src="public/prandell.JPG" alt="Logo" width="150" height="100">
+This pass modernized the project for a future visual reskin while preserving behavior:
+- Audited and documented architecture end-to-end.
+- Refactored source structure into clearer domains (`config`, `features`, `lib`, `hooks`).
+- Upgraded core dependencies (React 19, Tailwind 4, Vite 7, TypeScript 5.9, updated Three/Fiber/Drei stack).
+- Tightened linting with a practical strict baseline and moved root lint config to flat ESLint (`eslint.config.js`).
 
-<h3 align="center">Patrick Randell Portfolio</h3>
+## 1. High-Level Architecture
 
-  <p align="center">
-    New and improved portfolio website, created using React, ThreeJS and Typescript
-  </p>
-</div>
+The app is a **single-page React application** rendered by Vite.
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#usage">Usage</a>
-      <ul>
-         <li><a href="manual-deployment-and-execution">Manual Deployment and Execution</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#usage">Learn more</a>
-    </li>
-  </ol>
-</details>
+Runtime composition (`src/App.tsx`):
+1. `RecoilRoot` wraps global client state.
+2. `BrowserRouter` wraps navigation links (`#about`, `#work`, `#contact`).
+3. Sections render in sequence:
+   - `Navbar`
+   - `Hero`
+   - `About`
+   - `Experience`
+   - `Tech`
+   - `Works`
+   - `Contact`
 
-<!-- ABOUT THE PROJECT -->
+The site is mostly static content + animations, with three runtime integrations:
+- EmailJS (contact form send).
+- Firebase callable function for recent Steam game.
+- Firebase callable function for Patbot Q&A.
 
-## About The Project
+## 2. Repository Layout
 
-This repository contains all the code for my personal portfolio. The portfolio borrows ideas from many different tutorials and articles across the web.
+### Root
+- `src/`: Frontend application (React + TypeScript).
+- `public/`: Static assets (3D models, images).
+- `functions/`: Firebase Cloud Functions backend.
+- `firebase.json`: Hosting + Functions + emulator config.
+- `vite.config.ts`: Vite build config.
+- `eslint.config.js`: Root flat ESLint config.
 
-Big credit to [bruno imbrizi](http://brunoimbrizi.com) for his ThreeJS interactive particles, and [Javascript Mastery](https://www.youtube.com/watch?v=0fYi8SGA20k&t=9568s) for their portfolio website youtube video.
+### `src/` structure
+- `src/main.tsx`: React entry point.
+- `src/App.tsx`: Section orchestration.
+- `src/components/`: UI sections and reusable visual components.
+- `src/config/`: Content and theme-like config constants.
+- `src/features/`: Domain logic by feature (`chat`, `steam`).
+- `src/lib/`: Shared utilities (`firebase`, motion helpers, event/easing helpers).
+- `src/hooks/`: Shared hooks (`useMediaQuery`).
+- `src/assets/`: App-local static imports and shader files.
+- `src/types/`: Shared TS interfaces.
+- `src/index.css`: Tailwind v4 + global CSS utilities.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### `functions/` structure
+- `functions/index.js`: Steam API proxy endpoint export + AI function export.
+- `functions/ai.js`: OpenAI chat completion callable implementation.
+- `functions/package.json`: Functions runtime deps/scripts.
+- `functions/eslint.config.js`: Functions lint config.
 
-### Built With
+## 3. Component and Feature Breakdown
 
-- [![ThreeJs][three js]][threejs-url]
-- [![React][react]][react-url]
-- [![Typescript][typescript]][typescript-url]
+### Layout and section wrappers
+- `src/components/SectionWrapper/SectionWrapper.tsx`
+  - HOC wrapping sections with Framer Motion stagger animation.
+  - Inserts section anchor span (`id` for navbar hash links).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Navigation
+- `src/components/Navbar.tsx`
+  - Desktop + mobile nav.
+  - Scroll-aware background state.
+  - Uses animated `BubbleText` for nav labels.
+  - Uses `FuzzyBackground` for mobile menu backdrop.
 
-<!-- GETTING STARTED -->
+### Hero and interactive background
+- `src/components/Hero.tsx`
+  - Main intro text and CTA.
+  - Initializes custom Three.js particle effect (`InteractiveParticles`) into `.hero-container`.
 
-## Getting Started
+### About + Steam tracker
+- `src/components/About.tsx`
+  - Intro/overview content from `src/config/site.ts`.
+  - Renders `SteamTracker` card.
+- `src/components/SteamTracker/SteamTracker.tsx`
+  - Reads/writes `steamGameState` (Recoil atom).
+  - Fetches latest game via `getLatestSteamGame()`.
 
-### Prerequisites
+### Experience and projects
+- `src/components/Experience.tsx` + `ExperienceCard`
+  - Timeline rendering from `experiences` config.
+- `src/components/Works.tsx` + `ProjectCard`
+  - Project cards from `projects` config.
+  - Optional lightbox flow for private project screenshots.
 
-You will need NodeJs installed on your machine to start.
+### Contact + Patbot
+- `src/components/Contact.tsx`
+  - EmailJS form submission when env keys are present.
+  - Social links (LinkedIn + GitHub).
+  - Renders `ChatWindow`.
+- `src/components/ChatWindow/ChatWindow.tsx`
+  - Prompt input + rotating placeholder text.
+  - Calls `askPatbot()` and renders request/response chat bubbles.
 
-### Installation
+### 3D and graphics subsystem
+- `src/components/Canvas/*`
+  - `Earth.tsx`, `Octane.tsx`, `Stars.tsx`: React Three Fiber canvases.
+  - `InteractiveParticles/*`: custom raw Three.js + shader particle system for hero background.
+- Shader files:
+  - `src/assets/shaders/particle.vert`
+  - `src/assets/shaders/particle.frag`
 
-The following instructions are the steps necessary to execute the application.
+## 4. Data Flow and Integrations
 
-1. Clone the repository
+### A) Steam tracker flow
+1. `SteamTracker` mounts.
+2. Calls `getLatestSteamGame()` (`src/features/steam/steam.service.ts`).
+3. Service calls Firebase callable `getRecentGames` via `src/lib/firebase.ts`.
+4. Response transformed into `ISteamGame` and stored in Recoil atom.
+5. UI renders banner/playtime/achievements.
 
-   ```sh
-   git clone <>
-   ```
+### B) Patbot flow
+1. User submits question in `ChatWindow`.
+2. `askPatbot()` calls Firebase callable `askPatQuestion`.
+3. Functions backend (`functions/ai.js`) prompts OpenAI model with portfolio context + user question.
+4. Response returned and appended to chat history.
 
-2. Copy the template configuration file, `.env.production` to a _new_ file, `.env.local`.
+### C) Contact form flow
+1. User fills form in `Contact`.
+2. If EmailJS env keys exist, `emailjs.send(...)` is called.
+3. Success/failure feedback shown via alerts.
 
-   ```sh
-   cp .env.production .env.local
-   ```
+## 5. Styling and Motion
 
-3. Populate the fields with the appropriate information.
+### Tailwind v4
+- `src/index.css` uses:
+  - `@import 'tailwindcss';`
+  - `@theme { ... }` for project tokens (`primary`, `secondary`, custom shadow, `xs` breakpoint).
+- Utility classes remain heavily used in JSX.
 
-   ```dotenv
+### Styled-components
+- Used selectively for dynamic/icon styling and animated utility elements:
+  - `BubbleText.styles.tsx`
+  - `SteamTracker.styles.tsx`
+  - `TechCloud.styles.tsx`
+  - `FuzzyBackground.tsx`
+  - icon wrappers in `components/Icons/index.tsx`
 
-   ```
+### Framer Motion
+- Shared variants/helpers in `src/lib/motion.ts`.
+- Applied across sections/cards for reveal and slide transitions.
 
-4. Install the `Javascript` packages.
+## 6. Configuration and Content Sources
 
-   ```sh
-   npm install --legacy-peer-deps
-   ```
+- `src/config/site.ts`:
+  - `colours`, `navLinks`, `aboutMe`.
+- `src/config/content.ts`:
+  - `experiences`, `projects`, plus associated interfaces.
+- `src/config/styles.ts`:
+  - class-name string presets for headings/spacing.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+These files are the first place to edit for copy/content updates before any redesign.
 
-<!-- USAGE EXAMPLES -->
+## 7. Scripts
 
-## Usage
+### Root
+- `npm run dev`: start Vite dev server.
+- `npm run typecheck`: TS typecheck only.
+- `npm run lint`: ESLint (flat config).
+- `npm run build`: typecheck + production build to `build/`.
+- `npm run preview`: preview built app.
 
-Skibbidy bup bup bah
+### Functions
+- `npm --prefix functions run lint`
+- `npm --prefix functions run serve`
+- `npm --prefix functions run deploy`
 
-```shell
-cd /path/to/repository
-npm run dev
-```
+## 8. Environment and Secrets
 
-Open [http://127.0.0.1:5173](http://127.0.0.1:5173) with your browser to see the result.
+Copy the templates before running locally:
+- `cp .env.example .env.local`
+- `cp functions/.env.example functions/.env.local` (for local emulator workflows)
 
-## Learn More
+### Frontend (`.env.local`)
+Used in `src/components/Contact.tsx`:
+- `VITE_APP_EMAILJS_SERVICE_KEY`
+- `VITE_APP_EMAILJS_TEMPLATE_KEY`
+- `VITE_APP_EMAILJS_PUBLIC_KEY`
 
--
--
+### Firebase Functions environment
+Used in `functions/index.js` and `functions/ai.js`:
+- `REACT_APP_STEAM_USER_ID`
+- `REACT_APP_STEAM_API_KEY`
+- `OPENAI_API_KEY`
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+## 9. Deployment Model
 
-[next js]: https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white
-[next-url]: https://nextjs.org/
-[docker.com]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
-[docker-url]: https://www.docker.com
-[react-url]: https://react.dev/
-[typescript]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
-[typescript-url]: https://www.typescriptlang.org/
-[react]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
-[three js]: https://img.shields.io/badge/Three.js-white?style=for-the-badge&logo=Three.Js&logoColor=black
-[threejs-url]: https://threejs.org/
+Configured in `firebase.json`:
+- Hosting serves from `build/`.
+- SPA rewrite routes all requests to `/index.html`.
+- Functions source is `functions/`.
+- Emulator ports configured for functions/hosting/storage.
 
-# React + TypeScript + Vite
+## 10. Upgrade and Refactor Summary (this pass)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Refactor
+- Moved constants/content into `src/config/*`.
+- Moved reusable utilities into `src/lib/*`.
+- Moved domain logic into `src/features/chat` and `src/features/steam`.
+- Added shared hook `src/hooks/useMediaQuery.ts`.
+- Removed Recoil and replaced Steam tracker state with local React state (React 19 safe).
+- Removed stale generated file `src/output.css`.
 
-Currently, two official plugins are available:
+### Dependency/platform updates
+- React/ReactDOM: v19.
+- Tailwind: v4 (`@tailwindcss/vite` + CSS theme tokens).
+- Vite: v7.
+- TypeScript: v5.9.
+- Framer Motion, Firebase SDK, Three/Fiber/Drei stack updated.
+- Swapped `vite-plugin-glslify` -> `vite-plugin-glsl` for Vite 7 compatibility.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Linting
+- Migrated root lint to flat config (`eslint.config.js`).
+- Tightened practical rules (`no-unused-vars`, hooks rules, `eqeqeq`) without forcing a full legacy rewrite.
 
-## Expanding the ESLint configuration
+## 11. Current Known Caveats
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Build warns that `react-icon-cloud` uses `eval` internally.
+- JS bundle is large (Three.js assets + visual libs). Consider code splitting before major feature growth.
+- Functions package declares Node 20 engine; local install on Node 22 works with warning.
+- Some brand icons previously used in older icon packages are no longer exported in latest package versions; equivalent substitutes were applied.
 
-- Configure the top-level `parserOptions` property like this:
+## 12. Reskin Readiness Notes
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname
-  }
-}
-```
+The codebase is now in a better state for a visual redesign:
+- Content/config is centralized.
+- Feature services/state are separated from presentation.
+- Toolchain is current and builds cleanly.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Recommended next step: redesign section-by-section (`Hero` -> `About` -> `Work` -> `Contact`) while keeping existing data/service interfaces stable.

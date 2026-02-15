@@ -1,8 +1,8 @@
-import EventEmitter from 'events'
 import * as THREE from 'three'
 import browser from 'browser-detect'
 
-import { passiveEvent } from '../../../utils/event'
+import { passiveEvent } from '../../../lib/event'
+import { EventEmitter } from '../../../lib/event-emitter'
 
 export default class InteractiveControls extends EventEmitter {
   _enabled: any

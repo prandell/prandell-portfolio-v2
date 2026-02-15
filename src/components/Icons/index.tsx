@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import type { ReactNode } from 'react'
 import {
   SiVuedotjs,
   SiReact,
@@ -10,7 +11,7 @@ import {
   SiPostgresql,
   SiNestjs,
   SiTypescript,
-  SiAzuredevops,
+  SiJira,
   SiElasticsearch,
   SiPostman,
   SiPython,
@@ -21,7 +22,6 @@ import {
   SiJavascript,
   SiGithub,
   SiJunit5,
-  SiLinkedin,
   SiStripe,
   SiNetlify,
   SiFirebase
@@ -89,7 +89,7 @@ const TypescriptIcon = styled(SiTypescript)`
   fill: #3178c6;
 `
 
-const AzureDevopsIcon = styled(SiAzuredevops)`
+const AzureDevopsIcon = styled(SiJira)`
   height: 20px;
   padding: 0px 5px;
   align-self: center;
@@ -164,10 +164,34 @@ export const GithubIconLink = styled(SiGithub)`
   fill: white;
 `
 
-export const LinkedInIconLink = styled(SiLinkedin)`
-  align-self: center;
-  fill: white;
-`
+interface IconLinkProps {
+  size?: number
+  className?: string
+}
+
+export const LinkedInIconLink: React.FC<IconLinkProps> = ({
+  size = 24,
+  className
+}) => (
+  <div
+    className={className}
+    style={{
+      width: size,
+      height: size,
+      borderRadius: '9999px',
+      backgroundColor: 'white',
+      color: '#050816',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: Math.round(size * 0.5),
+      fontWeight: 700,
+      lineHeight: 1
+    }}
+  >
+    in
+  </div>
+)
 
 export const StripeIcon = styled(SiStripe)`
   height: 20px;
@@ -190,7 +214,7 @@ export const FirebaseIcon = styled(SiFirebase)`
 `
 
 export const IconDictionary: {
-  [key: string]: any
+  [key: string]: ReactNode
 } = {
   react: <ReactIcon key="react" />,
   nextjs: <NextJsIcon key="nextjs" />,

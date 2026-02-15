@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactParallaxTilt from 'react-parallax-tilt'
 import { motion } from 'framer-motion'
 
-import { TransitionDirection, fadeIn } from '../../utils/motion'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { ISteamGame, steamGameState } from '../../state/steam.state'
+import { TransitionDirection, fadeIn } from '../../lib/motion'
+import { initialSteamGameState } from '../../features/steam/steam.state'
+import type { ISteamGame } from '../../features/steam/steam.state'
 import { LiveBlinker } from './SteamTracker.styles'
-import { getLatestSteamGame } from '../../service/steam.service'
+import { getLatestSteamGame } from '../../features/steam/steam.service'
 
 interface SteamTrackerProps {}
 
 const SteamTracker: React.FC<SteamTrackerProps> = ({}) => {
+  const [steamGame, setSteamGame] = useState<ISteamGame>(initialSteamGameState)
   const {
     name,
     playtime2Weeks,
@@ -18,16 +19,17 @@ const SteamTracker: React.FC<SteamTrackerProps> = ({}) => {
     bannerUrl,
     achievementCount,
     achievementTotal
-  } = useRecoilValue<ISteamGame>(steamGameState)
-  const setSteamGame = useSetRecoilState(steamGameState)
+  } = steamGame
 
   useEffect(() => {
     const getGameAndUpdate = async () => {
       const game = await getLatestSteamGame()
-      if (game) setSteamGame(game)
+      if (game) {
+        setSteamGame(game)
+      }
     }
     getGameAndUpdate()
-  }, [])
+  }, [setSteamGame])
 
   return (
     <ReactParallaxTilt className="sm:w-[350px] w-full">

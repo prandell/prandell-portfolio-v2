@@ -1,7 +1,7 @@
 import React from 'react'
 import { VerticalTimelineElement } from 'react-vertical-timeline-component'
 
-import { Experience } from '../../constants'
+import type { Experience } from '../../config'
 
 interface ExperienceCardProps {
   experience: Experience

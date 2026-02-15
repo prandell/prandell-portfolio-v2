@@ -1,10 +1,9 @@
-import { selector } from 'gsap'
-import {
+import type {
   SteamApiResponse,
   SteamAchievementResponse
-} from '../models/steam-response.model'
-import { ISteamGame } from '../state/steam.state'
-import { getRecentGames } from '../utils/firebase'
+} from './steam-response.model'
+import type { ISteamGame } from './steam.state'
+import { getRecentGames } from '../../lib/firebase'
 
 const handleSteamApiResponse = (
   response: SteamApiResponse
@@ -40,16 +39,16 @@ const handleSteamApiResponse = (
 
 export const getLatestSteamGame = async () => {
   const response = await getRecentGames()
-    .then((result: any) => {
+    .then((result) => {
       // Read result of the Cloud Function.
       const data: SteamApiResponse = result.data
       return data
     })
     .catch((error) => {
       const code = error.code
-      const message = error.message
-      console.log(
-        `Failed to get Steam games - Error(${code}). Message: ${message}`
+      const errorMessage = error.message
+      console.error(
+        `Failed to get Steam games - Error(${code}). Message: ${errorMessage}`
       )
     })
   if (response) {

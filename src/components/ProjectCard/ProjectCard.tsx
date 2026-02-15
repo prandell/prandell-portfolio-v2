@@ -3,8 +3,8 @@ import ReactParallaxTilt from 'react-parallax-tilt'
 import { motion } from 'framer-motion'
 
 import { github, live } from '../../assets'
-import { TransitionDirection, fadeIn } from '../../utils/motion'
-import { Project } from '../../constants'
+import { TransitionDirection, fadeIn } from '../../lib/motion'
+import type { Project } from '../../config'
 import PhotoLightbox from '../PhotoLightbox/PhotoLightbox'
 
 interface ProjectCardProps extends Project {

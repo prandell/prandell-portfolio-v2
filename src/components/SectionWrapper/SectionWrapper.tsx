@@ -1,8 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-import { styles } from '../../styles'
-import { staggerContainer } from '../../utils/motion'
+import { styles } from '../../config/styles'
+import { staggerContainer } from '../../lib/motion'
 
 const SectionWrapper = (Component: React.ComponentType, idName: string) =>
   function HOC() {

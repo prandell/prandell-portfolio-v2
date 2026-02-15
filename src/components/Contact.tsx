@@ -3,14 +3,20 @@ import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 
-import { styles } from '../styles'
-import { TransitionDirection, slideIn } from '../utils/motion'
+import { styles } from '../config/styles'
+import { TransitionDirection, slideIn } from '../lib/motion'
 import { GithubIconLink, LinkedInIconLink } from './Icons'
 import ChatWindow from './ChatWindow/ChatWindow'
 
+interface ContactFormState {
+  name: string
+  email: string
+  message: string
+}
+
 const Contact = () => {
-  const formRef = useRef<any>()
-  const [form, setForm] = useState({
+  const formRef = useRef<HTMLFormElement | null>(null)
+  const [form, setForm] = useState<ContactFormState>({
     name: '',
     email: '',
     message: ''
@@ -18,7 +24,9 @@ const Contact = () => {
 
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { target } = e
     const { name, value } = target
 
@@ -28,19 +36,19 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
 
     if (
-      (import.meta as any).env.VITE_APP_EMAILJS_SERVICE_KEY &&
-      (import.meta as any).env.VITE_APP_EMAILJS_TEMPLATE_KEY &&
-      (import.meta as any).env.VITE_APP_EMAILJS_PUBLIC_KEY
+      import.meta.env.VITE_APP_EMAILJS_SERVICE_KEY &&
+      import.meta.env.VITE_APP_EMAILJS_TEMPLATE_KEY &&
+      import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ) {
       emailjs
         .send(
-          (import.meta as any).env.VITE_APP_EMAILJS_SERVICE_KEY,
-          (import.meta as any).env.VITE_APP_EMAILJS_TEMPLATE_KEY,
+          import.meta.env.VITE_APP_EMAILJS_SERVICE_KEY,
+          import.meta.env.VITE_APP_EMAILJS_TEMPLATE_KEY,
           {
             from_name: form.name,
             to_name: 'Patrick Randell',
@@ -48,7 +56,7 @@ const Contact = () => {
             to_email: 'patch.800@hotmail.com',
             message: form.message
           },
-          (import.meta as any).env.VITE_APP_EMAILJS_PUBLIC_KEY
+          import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
         )
         .then(
           () => {

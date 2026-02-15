@@ -1,9 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-import { styles } from '../styles'
-import { projects } from '../constants'
-import { TransitionDirection, fadeIn, textVariant } from '../utils/motion'
+import { styles } from '../config/styles'
+import { projects } from '../config'
+import { TransitionDirection, fadeIn, textVariant } from '../lib/motion'
 import ProjectCard from './ProjectCard/ProjectCard'
 import SectionWrapper from './SectionWrapper/SectionWrapper'
 

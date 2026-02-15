@@ -80,7 +80,7 @@ export default class WebGLView {
 
   goto(index: number) {
     // init next
-    if (this.currSample == null) this.particles.init(this.samples[index])
+    if (this.currSample === null) this.particles.init(this.samples[index])
     // hide curr then init next
     else {
       this.particles.hide(true).then(() => {
