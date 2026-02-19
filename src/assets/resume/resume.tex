@@ -1,0 +1,96 @@
+\documentclass{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.4 in,top=0.4in,right=0.4 in,bottom=0.4in]{geometry} % Document margins
+
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}} 
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\name{Patrick Randell} % Your name
+% You can merge both of these into a single line, if you do not have a website.
+\address{+61 457 058 193 \\ Melbourne, VIC} 
+\address{\href{mailto:patrickrandell@outlook.com}{patrickrandell@outlook.com} \\ \href{https://www.linkedin.com/in/randellp/}{LinkedIn} \\
+\href{https://github.com/prandell}{Github} \\ 
+\href{https://prandell.app/}{prandell.app}} %
+
+
+\begin{document}
+
+\begin{center}
+Senior Engineer with 6+ years of experience in full-stack development, distributed systems, and blockchain/Web3. Currently a core engineer on a large-scale crypto super app that scaled from \textasciitilde{}100 to 500k+ users. Highly proficient with modern AI coding tools and LLM-assisted development workflows.
+    
+\end{center}
+
+
+% Skills
+\begin{rSection}{Expertise}
+
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} p{0.62\textwidth} }
+Product & Full-stack engineering from database through API to UI, with a focus on quality and scale \\
+Distributed Systems & Real-time infrastructure, event-driven architecture, durable execution, and stateful edge compute \\
+Blockchain \& Web3 & Cross-chain wallet products, DeFi primitives (perps, swaps, earn), on-chain systems at scale \\
+Technical Leadership & Incident ownership, mentoring, cross-team coordination, and driving technical direction \\
+AI \& \href{https://every.to/guides/compound-engineering}{Compound Engineering} & Daily use of LLM-powered tools and agentic workflows to dramatically accelerate delivery \\
+\end{tabular}
+
+\vspace{4pt}
+\textbf{Technologies:} React, TypeScript, Next.js, Node.js, Python, PostgreSQL, EVM, Solana, Rust, Go, gRPC, tRPC, Cloudflare Workers, AWS, Kafka, Docker, OpenAI, Langchain, Cursor, Claude
+
+\end{rSection}
+
+\begin{rSection}{EXPERIENCE}
+
+\textbf{Senior Engineer} \hfill Apr 2024 - Present\\
+LabEleven | Large Australian Crypto Company \hfill \textit{Melbourne, VIC / Sydney, NSW}
+
+Core engineer on a non-custodial cross-chain crypto super app (wallet, perps, swaps, earn). The platform scaled from \textasciitilde{}100 to 500k+ users and reached a valuation above \$150M.
+
+ \begin{itemize}
+    \itemsep -3pt {} 
+    \item Owned critical wallet balance and asset metadata systems where correctness and uptime are directly tied to user trust.
+    \item Built a fantasy crypto card game end-to-end (backend, smart contracts, frontend, and launch operations) that reached 80k daily players. Designed the underlying distributed game engine using Cloudflare Durable Objects with per-user state and real-time leaderboard coordination.
+    \item Built incentive campaign infrastructure (loot boxes and raffles) using persisted randomness, idempotent durable execution, and ledger-backed reward accounting.
+    \item Drove technical direction, owned incidents end-to-end, mentored engineers, and coordinated across product and operations.
+    \item Leveraged AI-assisted development workflows (Cursor, Claude) to dramatically accelerate delivery across the stack.
+ \end{itemize}
+
+\textbf{Software Engineer to Senior Consultant} \hfill Apr 2021 - Apr 2024\\
+Deloitte | Illuminate \hfill \textit{Melbourne, VIC}
+
+Progressed from graduate to senior consultant across a supply chain analytics platform, taking on increasing ownership of delivery, architecture, and team leadership. Includes an extended leave for a working ski season in Whistler, BC (Oct 2023 -- Mar 2024).
+
+ \begin{itemize}
+    \itemsep -3pt {} 
+    \item Led delivery of a NextJs web application end-to-end, from architecture through to stakeholder demos for audiences of 30+.
+    \item Designed and built a multi-modal LLM chatbot using Langchain, Weaviate, and OpenAI to answer questions over source documents.
+    \item Contributed to open-source software (\href{https://github.com/langchain-ai/langchain/pull/10522}{Langchain PR}).
+    \item Led a team of engineers, managing task assignment, mentoring, and delivery planning.
+    \item Implemented graph traversal algorithms in PostgreSQL and maintained CI/CD pipelines across the platform.
+ \end{itemize}
+
+ \textbf{Software Engineering Internships} \hfill Nov 2019 - Feb 2020\\
+ANZ + Deloitte Platform Engineering \hfill \textit{Melbourne, VIC}
+
+ \begin{itemize}
+    \itemsep -3pt {} 
+    \item ANZ: Integrated Apache Kafka with Avro payloads and Confluent Schema Registry into a Python-based application migration controller.
+    \item Deloitte: Full-stack development in Java and Spring Boot; wrote unit tests and authored feature design documentation.
+ \end{itemize}
+\end{rSection}
+
+% Education
+\begin{rSection}{Education}
+
+{\bf Bachelor of Science (Mechatronic Systems)}, Melbourne University\hfill {2017 - 2020}\\
+{\bf Diploma of Computing}, Melbourne University\hfill {2017 - 2020}\\
+First class honours average across both degrees. A combination that developed strong systems thinking, mathematical foundations, and broad software engineering skills.\
+
+\end{rSection}
+
+% Projects
+\begin{rSection}{Hobbies and Interests}
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
+Interests & Gaming, anime, coding, comics, movies, birds \\
+Hobbies & Gaming, futsal, gym, cooking, snowboarding, hiking
+\end{tabular}\\
+\end{rSection} 
+
+\end{document}
