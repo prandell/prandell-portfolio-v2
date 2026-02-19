@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1771496749.68035 "/Users/wreninfinex/Repos/personal/prandell-portfolio-v2/src/assets/resume/resume.tex" "resume.pdf" "resume" 1771496749.87597 0
+["pdflatex"] 1771497565.66775 "/Users/wreninfinex/Repos/personal/prandell-portfolio-v2/src/assets/resume/resume.tex" "resume.pdf" "resume" 1771497565.8532 0
   "/Users/wreninfinex/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk" 1771496539.08243 12644 d86624a0f02d0473a8ff8a21918780ed ""
-  "/Users/wreninfinex/Repos/personal/prandell-portfolio-v2/src/assets/resume/resume.tex" 1771496742.13574 5440 0ccc8870214dbc03228f53547a1225f6 ""
+  "/Users/wreninfinex/Repos/personal/prandell-portfolio-v2/src/assets/resume/resume.tex" 1771497563.32578 5612 d5491e5c4775e49784319aa334c9ab9d ""
   "/opt/local/etc/texmf/texmf.cnf" 1771490544.90342 40070 7f59a02b05ff9eaf8c4e8ced3772104a ""
   "/opt/local/share/texmf-texlive/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1520409625 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/opt/local/share/texmf-texlive/fonts/tfm/public/cm/cmbx10.tfm" 1520409951 1328 c834bbb027764024c09d3d2bf908b5f0 ""
@@ -66,10 +66,10 @@
   "/opt/local/share/texmf-texlive/tex/latex/url/url.sty" 1520413986 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/opt/local/var/db/texmf/fonts/map/pdftex/updmap/pdftex.map" 1771493993 29751 e3dd28627b706f9dc741332cad88eeb5 ""
   "/opt/local/var/db/texmf/web2c/pdftex/pdflatex.fmt" 1771493193 1928519 e8421dc581ac68617d85727dd856ad69 ""
-  "resume.aux" 1771496749.84958 162 87159b23cce7c2b923b11c85495bbd6d "pdflatex"
-  "resume.cls" 1771490135 4928 3b3b57f3c8b0790ce01c73fdc59aee7a ""
-  "resume.out" 1771496749.83375 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "resume.tex" 1771496742.13574 5440 0ccc8870214dbc03228f53547a1225f6 ""
+  "resume.aux" 1771497565.82873 162 87159b23cce7c2b923b11c85495bbd6d "pdflatex"
+  "resume.cls" 1771496861.75155 4928 3b3b57f3c8b0790ce01c73fdc59aee7a ""
+  "resume.out" 1771497565.81394 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resume.tex" 1771497563.32578 5612 d5491e5c4775e49784319aa334c9ab9d ""
   (generated)
   "resume.aux"
   "resume.log"
