@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1771887738.34404 "/Users/prandell/Repositories/prandell-portfolio-v2/src/assets/resume/resume.tex" "src/assets/resume/resume.pdf" "resume" 1771887738.75423 0
-  "/Users/prandell/Repositories/prandell-portfolio-v2/src/assets/resume/resume.tex" 1771887690.12756 6171 4dbd817bbabadc6ec87ae8cbdaac7f54 ""
+["pdflatex"] 1771887854.78498 "/Users/prandell/Repositories/prandell-portfolio-v2/src/assets/resume/resume.tex" "src/assets/resume/resume.pdf" "resume" 1771887855.19163 0
+  "/Users/prandell/Repositories/prandell-portfolio-v2/src/assets/resume/resume.tex" 1771887832.38552 5474 e782e54849ac8535d48c8d6caafb7724 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -69,10 +69,10 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1771492139 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1771492040 3345733 ad1f8527da3ad99aeda3da416a8cf209 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "src/assets/resume/resume.aux" 1771887738.72419 162 87159b23cce7c2b923b11c85495bbd6d "pdflatex"
+  "src/assets/resume/resume.aux" 1771887855.15907 162 87159b23cce7c2b923b11c85495bbd6d "pdflatex"
   "src/assets/resume/resume.cls" 1771497527.10422 4928 3b3b57f3c8b0790ce01c73fdc59aee7a ""
-  "src/assets/resume/resume.out" 1771887738.5955 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "src/assets/resume/resume.tex" 1771887690.12756 6171 4dbd817bbabadc6ec87ae8cbdaac7f54 ""
+  "src/assets/resume/resume.out" 1771887855.0235 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "src/assets/resume/resume.tex" 1771887832.38552 5474 e782e54849ac8535d48c8d6caafb7724 ""
   (generated)
   "src/assets/resume/resume.aux"
   "src/assets/resume/resume.log"
